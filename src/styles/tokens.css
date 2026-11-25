@@ -1,0 +1,242 @@
+/* ───────── Tokens ───────── */
+:root {
+  --cloud: #eef2f6;
+  --surface: #ffffff;
+  --surface-2: #f6f8fb;
+  --ink: #0b1220;
+  --muted: #55607a;
+  --line: rgba(11, 18, 32, 0.12);
+
+  --signal: #2f6bff;
+  --amber: #ff9f0a;
+  --mint: #2ec98a;
+  --mint-ink: #0b6b47;
+
+  --accent: var(--signal);
+  --accent-ink: #ffffff;
+  --accent-text: #1e56e8;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Instrument Sans', system-ui, sans-serif;
+
+  --r-phone: 44px;
+  --r-card: 20px;
+  --r-pill: 999px;
+
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --maxw: 1200px;
+  --bar-h: 3.5rem;
+  --shadow: 0 1px 2px rgba(11, 18, 32, 0.06), 0 12px 32px -12px rgba(11, 18, 32, 0.25);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --cloud: #0b1220;
+  --surface: #141c2e;
+  --surface-2: #19223a;
+  --ink: #e8edf5;
+  --muted: #9aa6bf;
+  --line: rgba(232, 237, 245, 0.14);
+  --accent-text: #7fa2ff;
+  --mint-ink: #5be0aa;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 36px -14px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+/* Modo avión: el acento pasa a ámbar en toda la web. */
+:root[data-offline='true'] {
+  --accent: var(--amber);
+  --accent-ink: #1b1200;
+  --accent-text: #9a5b00;
+}
+
+:root[data-offline='true'][data-theme='dark'] {
+  --accent-text: #ffb340;
+}
+
+/* ───────── Base ───────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--bar-h) + 1rem);
+}
+
+body {
+  margin: 0;
+  background: var(--cloud);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+dl,
+dd,
+ul,
+ol,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ───────── Piezas comunes ───────── */
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  padding: clamp(4.5rem, 10vw, 8rem) 0;
+}
+
+.section__title {
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-weight: 700;
+  font-stretch: 90%;
+  line-height: 1;
+}
+
+.section__lead {
+  max-width: 34rem;
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 1.2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.3rem;
+  border: 1.5px solid transparent;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn--outline {
+  border-color: var(--line);
+  background: var(--surface);
+}
+
+.btn--outline:hover {
+  border-color: var(--ink);
+}
+
+.btn--ink {
+  background: var(--ink);
+  color: var(--cloud);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.chip--mint {
+  background: color-mix(in srgb, var(--mint) 18%, transparent);
+  color: var(--mint-ink);
+}

@@ -1,0 +1,78 @@
+.path {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .path {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 36rem);
+    gap: 4rem;
+  }
+
+  .path__title {
+    position: sticky;
+    top: calc(var(--bar-h) + 1.5rem);
+  }
+}
+
+.notifs {
+  max-width: 40rem;
+}
+
+.notif {
+  position: sticky;
+  top: calc(var(--bar-h) + 1rem + var(--i) * 0.9rem);
+  padding-bottom: 5rem;
+}
+
+.notif:last-child {
+  padding-bottom: 0;
+}
+
+.notif__card {
+  padding: 1.2rem 1.3rem 1.3rem;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.notif__card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.notif__app {
+  padding: 0.12rem 0.6rem;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.notif__card time {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.notif__card h3 {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.notif__card p {
+  margin-top: 0.3rem;
+  color: var(--muted);
+}
+
+.notif__link {
+  display: inline-block;
+  margin-top: 0.7rem;
+  color: var(--accent-text);
+  font-weight: 700;
+}

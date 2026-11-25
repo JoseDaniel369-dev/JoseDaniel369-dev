@@ -1,0 +1,122 @@
+.hero {
+  padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(3rem, 7vw, 6rem);
+  background:
+    radial-gradient(52rem 34rem at 88% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+    radial-gradient(36rem 26rem at 0% 30%, color-mix(in srgb, var(--mint) 12%, transparent), transparent 70%);
+  transition: background 0.5s ease;
+}
+
+.hero__inner {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+}
+
+.hero__card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 1rem 0.7rem 0.7rem;
+}
+
+.hero__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.hero__role {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--mint) 18%, transparent);
+  color: var(--mint-ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.hero__status i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--mint);
+}
+
+.hero__status.is-off {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.hero__status.is-off i {
+  background: var(--accent);
+}
+
+@media (max-width: 440px) {
+  .hero__status {
+    display: none;
+  }
+}
+
+.hero__title {
+  max-width: 14ch;
+  margin-top: 1.6rem;
+  font-weight: 800;
+  font-stretch: 92%;
+  font-size: clamp(3rem, 9vw, 6.4rem);
+  line-height: 0.96;
+  letter-spacing: -0.032em;
+}
+
+.hero__lead {
+  max-width: 32rem;
+  margin-top: 1.4rem;
+  color: var(--muted);
+  font-size: 1.25rem;
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.hero__invite {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  max-width: 32rem;
+  margin-top: 2.2rem;
+  padding: 0.9rem 1.1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.hero__phone {
+  justify-self: center;
+  width: 100%;
+}
+
+/* En pantallas estrechas el teléfono de JfooD aparece justo debajo: no se repite. */
+@media (max-width: 899px) {
+  .hero__phone {
+    display: none;
+  }
+}

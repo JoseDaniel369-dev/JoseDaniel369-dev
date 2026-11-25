@@ -1,0 +1,78 @@
+.live {
+  margin-top: 2.5rem;
+  padding: 1.3rem;
+}
+
+.live__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.live__head h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.live__cells {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem 1.5rem;
+  margin-top: 1.1rem;
+}
+
+.live__cells dt {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.live__cells dd {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.live__bar {
+  display: flex;
+  gap: 3px;
+  height: 0.65rem;
+  margin-top: 1.4rem;
+  overflow: hidden;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+}
+
+.live__bar i {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+}
+
+.live__langs ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin-top: 0.8rem;
+  font-size: 0.92rem;
+}
+
+.live__langs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.live__langs li i {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+}
+
+.live__none {
+  margin-top: 0.8rem;
+  color: var(--muted);
+}

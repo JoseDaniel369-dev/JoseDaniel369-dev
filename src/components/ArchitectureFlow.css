@@ -1,0 +1,195 @@
+.arch {
+  margin-top: clamp(4rem, 9vw, 7rem);
+}
+
+.arch__title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+}
+
+.arch__flow {
+  display: grid;
+  margin-top: 1.6rem;
+}
+
+@media (min-width: 900px) {
+  .arch__flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.arch__item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .arch__item {
+    flex-direction: row;
+  }
+}
+
+.arch__node {
+  flex: 1;
+  padding: 1.2rem;
+  transition: opacity 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.arch__node.is-dim {
+  opacity: 0.45;
+}
+
+.arch__node.is-local {
+  border-color: var(--mint);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mint) 30%, transparent), var(--shadow);
+}
+
+.arch__node h4 {
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.arch__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.8rem 0;
+}
+
+.arch__tech li {
+  padding: 0.12rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.arch__node p {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+/* Conector: línea con paquetes que viajan; en modo avión se corta. */
+.arch__link {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3px;
+  height: 4.2rem;
+  margin: 0 auto;
+  background: repeating-linear-gradient(to bottom, var(--accent) 0 6px, transparent 6px 12px);
+  transition: background 0.4s ease;
+}
+
+.arch__link.is-cut {
+  background: repeating-linear-gradient(to bottom, var(--line) 0 4px, transparent 4px 14px);
+}
+
+.arch__label,
+.arch__cut {
+  position: absolute;
+  left: 0.9rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--accent-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.arch__cut {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--muted);
+}
+
+.arch__packet {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-left: -0.35rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  animation: packet-y 1.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.arch__packet--late {
+  animation-delay: 0.9s;
+  background: var(--mint);
+  box-shadow: 0 0 12px var(--mint);
+}
+
+@keyframes packet-y {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  to {
+    top: calc(100% - 0.7rem);
+    opacity: 0;
+  }
+}
+
+@keyframes packet-x {
+  from {
+    left: 0;
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  to {
+    left: calc(100% - 0.7rem);
+    opacity: 0;
+  }
+}
+
+@media (min-width: 900px) {
+  .arch__link {
+    width: 3.6rem;
+    height: 3px;
+    margin: auto 0;
+    background: repeating-linear-gradient(to right, var(--accent) 0 6px, transparent 6px 12px);
+  }
+
+  .arch__link.is-cut {
+    background: repeating-linear-gradient(to right, var(--line) 0 4px, transparent 4px 14px);
+  }
+
+  .arch__label,
+  .arch__cut {
+    left: 50%;
+    top: -2rem;
+    transform: translateX(-50%);
+  }
+
+  .arch__packet {
+    top: 50%;
+    left: 0;
+    margin: -0.35rem 0 0;
+    animation-name: packet-x;
+  }
+}
+
+.arch__caption {
+  max-width: 40rem;
+  margin-top: 1.3rem;
+  color: var(--muted);
+}
