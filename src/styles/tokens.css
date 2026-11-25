@@ -224,6 +224,32 @@ h4 {
   box-shadow: var(--shadow);
 }
 
+/* Foco de luz que sigue al cursor (lo posiciona useSpotlight con --mx y --my). */
+.spot {
+  position: relative;
+  isolation: isolate;
+}
+
+.spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 22%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.spot:hover::before {
+  opacity: 1;
+}
+
 .chip {
   display: inline-flex;
   align-items: center;

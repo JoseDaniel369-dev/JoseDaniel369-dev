@@ -22,7 +22,7 @@ export function LivePanel() {
   const hasData = at !== null
 
   return (
-    <aside className="live card" aria-label={p.liveTitle}>
+    <aside className="live card spot" aria-label={p.liveTitle}>
       <header className="live__head">
         <h3>{p.liveTitle}</h3>
         {hasData && (

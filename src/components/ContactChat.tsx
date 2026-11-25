@@ -84,8 +84,7 @@ export function ContactChat() {
   }
 
   const links = [
-    { label: c.github, href: profile.github.main, icon: <GithubIcon size={20} /> },
-    { label: c.githubSchool, href: profile.github.school, icon: <GithubIcon size={20} /> },
+    { label: c.github, href: profile.github, icon: <GithubIcon size={20} /> },
     ...(profile.linkedin ? [{ label: c.linkedin, href: profile.linkedin, icon: <LinkedinIcon size={20} /> }] : []),
   ]
 
@@ -96,7 +95,7 @@ export function ContactChat() {
           <h2 id="contact-title" className="section__title">
             {c.title}
           </h2>
-          <p className="section__lead">{offline ? c.offlineHint : c.bubbles[2]}</p>
+          <p className="section__lead">{offline ? c.offlineHint : c.lead}</p>
 
           <div className="contact__actions">
             <button className="btn btn--primary" onClick={copyEmail}>
@@ -134,7 +133,7 @@ export function ContactChat() {
           </header>
 
           <div className="chat__thread" ref={thread} aria-live="polite">
-            {c.bubbles.slice(0, 2).map((b) => (
+            {c.bubbles.map((b) => (
               <p className="bubble bubble--in" key={b}>
                 {b}
               </p>

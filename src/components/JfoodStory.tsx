@@ -7,6 +7,7 @@ import { profile } from '../data/profile'
 import { Phone } from './Phone'
 import { Screen, type ScreenId } from './screens/Screens'
 import { ArchitectureFlow } from './ArchitectureFlow'
+import { JfoodNumbers } from './JfoodNumbers'
 import { LivePanel } from './LivePanel'
 import './JfoodStory.css'
 
@@ -30,8 +31,9 @@ export function JfoodStory() {
   }, [])
 
   return (
-    <section className="section" id="proyecto" aria-labelledby="project-title">
+    <section className="section" id="jfood" aria-labelledby="project-title">
       <div className="wrap">
+        <span className="chip story__chip">{p.caseStudyChip}</span>
         <h2 id="project-title" className="section__title">
           {p.title}
         </h2>
@@ -47,6 +49,8 @@ export function JfoodStory() {
             {p.download}
           </a>
         </div>
+
+        <JfoodNumbers />
 
         <div className="story">
           <div className="story__phone">

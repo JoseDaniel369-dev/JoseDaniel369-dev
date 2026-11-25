@@ -1,0 +1,94 @@
+.bento {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+@media (min-width: 560px) {
+  .bento {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tile--free,
+  .tile--wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 960px) {
+  .bento {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto;
+  }
+  .tile--free {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+  .tile--wide {
+    grid-column: 3 / 5;
+  }
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1.4rem;
+  min-height: 11rem;
+}
+
+.tile p {
+  max-width: 22rem;
+  color: var(--muted);
+}
+
+.tile__big {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 90%;
+  font-size: clamp(3rem, 6vw, 4.6rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--accent-text);
+}
+
+.tile--free {
+  justify-content: space-between;
+}
+
+.tile--free h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.tile--free ul {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 1.5rem;
+}
+
+.tile--free li {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.35rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.tile--free li strong {
+  min-width: 1.2ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 90%;
+  font-size: clamp(3.6rem, 8vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--accent-text);
+}
+
+.tile--free li span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  letter-spacing: -0.02em;
+}

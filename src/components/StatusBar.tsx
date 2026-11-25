@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, useScroll } from 'motion/react'
 import { BatteryFull, Menu, Moon, Plane, Signal, SignalZero, Sun, Wifi, WifiOff, X } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
@@ -26,11 +26,12 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
   const { offline } = useNetwork()
   const time = useClock(lang)
   const [open, setOpen] = useState(false)
+  const { scrollYProgress } = useScroll()
 
   const links = [
-    { href: '#proyecto', label: t.nav.project },
+    { href: '#proyectos', label: t.nav.project },
     { href: '#stack', label: t.nav.stack },
-    { href: '#trayectoria', label: t.nav.path },
+    { href: '#enfoque', label: t.nav.approach },
     { href: '#contacto', label: t.nav.contact },
   ]
 
@@ -44,6 +45,7 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
   return (
     <header className="bar">
       <div className="bar__main">
+        <motion.i className="bar__progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
         <div className="bar__inner wrap">
           <time className="bar__time">{time}</time>
           <a className="bar__logo" href="#top" aria-label={t.hero.name}>

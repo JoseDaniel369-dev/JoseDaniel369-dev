@@ -6,10 +6,7 @@ export const profile = {
   // Pon tu foto en public/foto.jpg. Si no existe, se muestra el monograma "JD".
   photo: `${import.meta.env.BASE_URL}foto.jpg`,
 
-  github: {
-    main: 'https://github.com/JoseDaniel369-dev',
-    school: 'https://github.com/JoseDanielDAW',
-  },
+  github: 'https://github.com/JoseDaniel369-dev',
 
   // Pega aquí la URL de tu perfil, p. ej. 'https://www.linkedin.com/in/tu-usuario'.
   // Mientras esté vacío, el acceso a LinkedIn no se muestra.

@@ -1,0 +1,135 @@
+.projects {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .projects {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .project--featured {
+    grid-column: span 2;
+  }
+}
+
+.project {
+  display: flex;
+}
+
+.project__card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2rem;
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+@media (min-width: 640px) {
+  .project--featured .project__card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.project__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  max-width: 34rem;
+}
+
+.project__text h3 {
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  font-weight: 800;
+  font-stretch: 90%;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.project__text p {
+  color: var(--muted);
+  font-size: 1.12rem;
+}
+
+.project__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project__tech li {
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.project__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+/* Arte del destacado: solo aparece donde hay sitio al lado del texto. */
+@media (max-width: 639px) {
+  .ring-art {
+    display: none;
+  }
+}
+
+.ring-art {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: min(100%, 15rem);
+  margin: 0 auto;
+}
+
+.ring-art span {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.1;
+}
+
+.ring-art strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.6rem;
+  letter-spacing: -0.04em;
+}
+
+/* Tarjeta vacía: invita a seguir el GitHub hasta que haya más proyectos. */
+.project__card--next {
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: clamp(1.4rem, 3vw, 2rem);
+  border: 2px dashed var(--line);
+  border-radius: var(--r-card);
+}
+
+.project__card--next h3 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.project__card--next p {
+  color: var(--muted);
+}
+
+.project__card--next .btn {
+  margin-top: 0.4rem;
+}

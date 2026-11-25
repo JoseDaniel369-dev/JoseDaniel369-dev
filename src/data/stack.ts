@@ -9,12 +9,8 @@ import {
   siGooglegemini,
   siGithubactions,
   siVite,
-  siPhp,
-  siDocker,
-  siFirebase,
-  siJavascript,
-  siHtml5,
-  siCss,
+  siNpm,
+  siRender,
   type SimpleIcon,
 } from 'simple-icons'
 
@@ -25,7 +21,7 @@ export interface StackApp {
   color?: string
 }
 
-// Las 4 primeras van al dock.
+// Las 4 primeras van al dock; las otras 8 llenan la pantalla de inicio en dos filas de 4.
 export const stackApps: StackApp[] = [
   { id: 'typescript', icon: siTypescript },
   { id: 'reactnative', icon: siReact, color: '20232A' },
@@ -35,20 +31,13 @@ export const stackApps: StackApp[] = [
   { id: 'zod', icon: siZod },
   { id: 'sqlite', icon: siSqlite },
   { id: 'gemini', icon: siGooglegemini },
+  { id: 'npm', icon: siNpm },
+  { id: 'render', icon: siRender, color: '46E3B7' },
   { id: 'actions', icon: siGithubactions },
   { id: 'vite', icon: siVite },
 ]
 
 export const dockIds = ['typescript', 'reactnative', 'node', 'expo']
-
-export const schoolApps: StackApp[] = [
-  { id: 'php', icon: siPhp },
-  { id: 'docker', icon: siDocker },
-  { id: 'firebase', icon: siFirebase },
-  { id: 'javascript', icon: siJavascript },
-  { id: 'html', icon: siHtml5 },
-  { id: 'css', icon: siCss },
-]
 
 /** Elige texto claro u oscuro según la luminosidad del fondo. */
 export function inkFor(hex: string): string {

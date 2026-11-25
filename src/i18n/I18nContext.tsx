@@ -27,7 +27,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = lang
-    document.title = (lang === 'es' ? es : en).docTitle
+    const dict = lang === 'es' ? es : en
+    document.title = dict.docTitle
+    document.querySelector('meta[name="description"]')?.setAttribute('content', dict.docDescription)
     try {
       localStorage.setItem('lang', lang)
     } catch {
