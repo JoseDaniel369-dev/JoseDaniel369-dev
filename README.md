@@ -73,4 +73,3 @@ Open to freelance projects, collaborations and opportunities to build useful dig
 ## 📫 Contact
 
 - **Email:** [josedanielgarcialeon4@gmail.com](mailto:josedanielgarcialeon4@gmail.com)
-- **
