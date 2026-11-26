@@ -1,5 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react'
-import { motion, useReducedMotion, useSpring } from 'motion/react'
+import { m, useReducedMotion, useSpring } from 'motion/react'
 import { Plane } from 'lucide-react'
 import { useNetwork } from '../context/NetworkContext'
 import './Phone.css'
@@ -35,7 +35,7 @@ export function Phone({ children, label, tilt = false }: Props) {
 
   return (
     <div className="phone-stage" ref={stage}>
-      <motion.div className="phone" style={{ rotateX, rotateY }} role="img" aria-label={label}>
+      <m.div className="phone" style={{ rotateX, rotateY }} role="img" aria-label={label}>
         <div className="phone__island" aria-hidden="true" />
         <div className="phone__status" aria-hidden="true">
           <span>9:41</span>
@@ -43,7 +43,7 @@ export function Phone({ children, label, tilt = false }: Props) {
         </div>
         <div className="phone__screen">{children}</div>
         <div className="phone__home" aria-hidden="true" />
-      </motion.div>
+      </m.div>
     </div>
   )
 }

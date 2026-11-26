@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jose Daniel García León | Desarrollador full-stack en React Native y TypeScript</title>
+    <title>Jose Daniel García León | Desarrollador web: webs con SEO y apps móviles</title>
     <meta
       name="description"
-      content="Jose Daniel, desarrollador full-stack. Construyo apps enteras, desde la base de datos hasta la pantalla, con React Native y TypeScript. Descubre JfooD."
+      content="Desarrollador web y de apps. Hago webs rápidas y optimizadas para Google, apps con React Native y llevo el marketing web de negocios como Se7en Antequera."
     />
     <meta name="author" content="Jose Daniel García León" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -17,19 +17,20 @@
     <meta property="og:site_name" content="Jose Daniel García León" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:locale:alternate" content="en_US" />
-    <meta property="og:title" content="Jose Daniel García León | Desarrollador full-stack" />
+    <meta property="og:title" content="Jose Daniel García León | Desarrollador web y de apps" />
     <meta
       property="og:description"
-      content="Apps enteras, desde la base de datos hasta la pantalla. React Native, TypeScript y Node.js."
+      content="Webs rápidas y con SEO, apps móviles y el marketing web de tu negocio: ficha de Google, analítica y redes."
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Jose Daniel García León | Desarrollador full-stack" />
+    <meta name="twitter:title" content="Jose Daniel García León | Desarrollador web y de apps" />
     <meta
       name="twitter:description"
-      content="Apps enteras, desde la base de datos hasta la pantalla. React Native, TypeScript y Node.js."
+      content="Webs rápidas y con SEO, apps móviles y el marketing web de tu negocio: ficha de Google, analítica y redes."
     />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script>
       // Aplica tema y modo avión antes de pintar para evitar parpadeos.
       try {
@@ -38,32 +39,39 @@
         if (t !== 'light' && t !== 'dark') t = localStorage.getItem('theme')
         if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
         document.documentElement.dataset.theme = t
+        var m = document.querySelector('meta[name="theme-color"]')
+        if (m) m.setAttribute('content', t === 'dark' ? '#0B1220' : '#EEF2F6')
         document.documentElement.dataset.offline = q.get('offline') === '1' ? 'true' : 'false'
       } catch (e) {}
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Instrument+Sans:wght@400..700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <div id="root"></div>
     <noscript>
       <main style="max-width: 40rem; margin: 3rem auto; padding: 0 1rem; font-family: system-ui, sans-serif; line-height: 1.6">
-        <h1>Jose Daniel García León, desarrollador full-stack</h1>
+        <h1>Jose Daniel García León, desarrollador web y de apps</h1>
         <p>
-          Construyo apps enteras, desde la base de datos hasta la pantalla, con React Native, TypeScript y Node.js.
-          Diseño la app, la API y el despliegue, y lo publico.
+          Hago webs y apps, desde la primera línea de código hasta el primer cliente: webs rápidas y optimizadas para
+          Google, y apps móviles con React Native, TypeScript y Node.js.
         </p>
-        <h2>Proyectos: JfooD</h2>
+        <h2>Webs para negocios</h2>
+        <p>
+          Diseño, construyo y llevo la web de tu negocio: web a medida, SEO técnico y local, ficha de Google Business
+          Profile, Search Console, analítica y redes.
+        </p>
+        <h2>Proyectos</h2>
+        <h3>Se7en Antequera</h3>
+        <p>
+          Web de un centro de artes marciales de Antequera, con su marketing web llevado por mí.
+          <a href="https://se7enmartialartsgymweb.josedanielgarcialeon4.workers.dev/">Ver la web</a>
+        </p>
+        <h3>JfooD</h3>
         <p>
           JfooD es un contador de nutrición gratuito y offline-first para Android, con reconocimiento de comida por IA.
           <a href="https://github.com/JoseDaniel369-dev/JfooD">Ver el código</a> ·
           <a href="https://github.com/JoseDaniel369-dev/JfooD/releases/latest">Descargar el APK</a>
         </p>
-        <p><a href="https://github.com/JoseDaniel369-dev">GitHub</a> · josedanielgarcialeon4@gmail.com</p>
+        <p><a href="https://github.com/JoseDaniel369-dev">GitHub</a> · josedanielgarcialeon4@gmail.com · <a href="tel:+34684180746">+34 684 18 07 46</a></p>
       </main>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>

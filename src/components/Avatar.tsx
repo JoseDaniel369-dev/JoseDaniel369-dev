@@ -8,12 +8,12 @@ export function Avatar({ alt, size = 72 }: { alt: string; size?: number }) {
 
   return (
     <span className="avatar" style={{ width: size, height: size }}>
-      {failed ? (
+      {failed || !profile.photo ? (
         <span className="avatar__mono" aria-hidden="true" style={{ fontSize: size * 0.38 }}>
           JD
         </span>
       ) : (
-        <img src={profile.photo} alt={alt} width={size} height={size} onError={() => setFailed(true)} />
+        <img src={profile.photo} alt={alt} width={size} height={size} fetchPriority="high" onError={() => setFailed(true)} />
       )}
     </span>
   )

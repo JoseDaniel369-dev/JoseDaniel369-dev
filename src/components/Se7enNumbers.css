@@ -1,0 +1,47 @@
+/* Los selectores llevan .tile--free delante para ganar a las reglas de lista de JfoodNumbers.css. */
+.tile--free .scores {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 1.4rem;
+}
+
+.tile--free .scores .score {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border-top: 0;
+  text-align: center;
+}
+
+.tile--free .scores .score__ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 6.4rem);
+}
+
+.tile--free .scores .score__ring strong {
+  position: absolute;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--mint-ink);
+}
+
+.tile--free .scores .score > span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.tile--free .tile__note {
+  margin-top: 1rem;
+  font-size: 0.88rem;
+}

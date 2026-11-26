@@ -1,20 +1,21 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
-import { ArrowUpRight, Check, Clock, Copy, Send } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
+import { AnimatePresence, m } from 'motion/react'
+import { AlertCircle, ArrowUpRight, Check, Clock, Copy, FileDown, Loader, Phone, Send } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
 import { profile } from '../data/profile'
+import { hasForm, loadQueue, openMail, saveQueue, sendMessage, whatsappHref, type Outgoing } from '../lib/contact'
 import { Avatar } from './Avatar'
-import { GithubIcon, LinkedinIcon } from './BrandIcons'
+import { GithubIcon, LinkedinIcon, WhatsappIcon } from './BrandIcons'
 import { Toast } from './Toast'
 import './ContactChat.css'
 
-interface Msg {
-  id: number
-  name: string
-  text: string
-  status: 'sent' | 'queued'
+type Status = 'sent' | 'queued' | 'sending' | 'error'
+interface Msg extends Outgoing {
+  status: Status
 }
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 export function ContactChat() {
   const { t } = useI18n()
@@ -22,36 +23,82 @@ export function ContactChat() {
   const c = t.contact
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [text, setText] = useState('')
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<'empty' | 'email' | null>(null)
   const [toast, setToast] = useState('')
   const toastTimer = useRef(0)
-  const nextId = useRef(1)
   const wasOffline = useRef(offline)
   const thread = useRef<HTMLDivElement>(null)
+  const field = useRef<HTMLTextAreaElement>(null)
+  const honeypot = useRef<HTMLInputElement>(null)
+  // Copia síncrona de los mensajes para los envíos (evita cierres con datos viejos).
+  const msgsRef = useRef<Msg[]>([])
+  msgsRef.current = msgs
+  const offlineRef = useRef(offline)
+  offlineRef.current = offline
 
-  useEffect(() => () => window.clearTimeout(toastTimer.current), [])
+  const setStatus = useCallback((id: string, status: Status) => {
+    setMsgs((all) => all.map((msg) => (msg.id === id ? { ...msg, status } : msg)))
+  }, [])
 
-  function showToast(message: string) {
+  const showToast = useCallback((message: string) => {
     setToast(message)
     window.clearTimeout(toastTimer.current)
     toastTimer.current = window.setTimeout(() => setToast(''), 3500)
-  }
+  }, [])
 
-  function openMail(from: string, texts: string[]) {
-    const body = `${texts.join('\n\n')}\n\n${from}`
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(c.subject)}&body=${encodeURIComponent(body)}`
-  }
+  useEffect(() => () => window.clearTimeout(toastTimer.current), [])
 
-  // Al salir del modo avión, los mensajes en cola se envían de una vez.
-  useEffect(() => {
-    if (wasOffline.current && !offline) {
-      const queued = msgs.filter((m) => m.status === 'queued')
-      if (queued.length) {
-        setMsgs((all) => all.map((m) => (m.status === 'queued' ? { ...m, status: 'sent' } : m)))
-        openMail(queued[0].name, queued.map((m) => m.text))
+  /** Envía los mensajes pendientes. Con formulario real salen uno a uno; sin él se abre un solo correo. */
+  const deliver = useCallback(
+    async (pending: Msg[]) => {
+      if (!pending.length) return
+      if (!hasForm) {
+        pending.forEach((msg) => setStatus(msg.id, 'sent'))
+        openMail(pending[0].name, pending.map((msg) => msg.text), c.subject)
+        return
       }
-    }
+      for (const msg of pending) {
+        setStatus(msg.id, 'sending')
+        try {
+          await sendMessage(msg, c.subject)
+          setStatus(msg.id, 'sent')
+        } catch {
+          setStatus(msg.id, 'error')
+        }
+      }
+    },
+    [c.subject, setStatus],
+  )
+
+  // Al montar: recupera los mensajes que quedaron en cola en una visita anterior y, si hay red, los envía.
+  // Solo con formulario real: sin él no hay entrega posible y la cola vive únicamente en esta visita.
+  useEffect(() => {
+    if (!hasForm) return
+    const saved = loadQueue()
+    if (!saved.length) return
+    const restored = saved.map((q) => ({ ...q, status: 'queued' as const }))
+    setMsgs(restored)
+    // Se espera un instante: ?offline=1 se aplica en el efecto del proveedor, que corre después que el de sus hijos.
+    const timer = window.setTimeout(() => {
+      if (!offlineRef.current) void deliver(restored)
+    }, 250)
+    return () => window.clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // La cola se guarda mientras haya mensajes pendientes o fallidos.
+  useEffect(() => {
+    if (!hasForm) return
+    saveQueue(
+      msgs.filter((msg) => msg.status === 'queued' || msg.status === 'error').map(({ status: _s, ...rest }) => rest),
+    )
+  }, [msgs])
+
+  // Al salir del modo avión, los mensajes en cola salen de una vez.
+  useEffect(() => {
+    if (wasOffline.current && !offline) void deliver(msgsRef.current.filter((msg) => msg.status === 'queued'))
     wasOffline.current = offline
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offline])
@@ -60,18 +107,33 @@ export function ContactChat() {
     thread.current?.scrollTo({ top: thread.current.scrollHeight, behavior: 'smooth' })
   }, [msgs.length])
 
+  function applyPreset(preset: string) {
+    setText(preset)
+    setError(null)
+    field.current?.focus()
+  }
+
   function onSubmit(e: FormEvent) {
     e.preventDefault()
     const clean = text.trim()
-    if (!clean) {
-      setError(true)
-      return
+    if (!clean) return setError('empty')
+    const mail = email.trim()
+    if (hasForm && !EMAIL_RE.test(mail)) return setError('email')
+    setError(null)
+
+    // Trampa para bots: un humano nunca rellena este campo oculto.
+    if (honeypot.current?.value) return
+
+    const msg: Msg = {
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      name: name.trim(),
+      email: mail,
+      text: clean,
+      status: offline ? 'queued' : 'sending',
     }
-    setError(false)
-    const from = name.trim()
-    setMsgs((all) => [...all, { id: nextId.current++, name: from, text: clean, status: offline ? 'queued' : 'sent' }])
+    setMsgs((all) => [...all, msg])
     setText('')
-    if (!offline) openMail(from, [clean])
+    if (!offline) void deliver([msg])
   }
 
   async function copyEmail() {
@@ -84,8 +146,14 @@ export function ContactChat() {
   }
 
   const links = [
-    { label: c.github, href: profile.github, icon: <GithubIcon size={20} /> },
-    ...(profile.linkedin ? [{ label: c.linkedin, href: profile.linkedin, icon: <LinkedinIcon size={20} /> }] : []),
+    { label: profile.phone, href: profile.phoneHref, icon: <Phone size={20} aria-hidden="true" />, external: false },
+    { label: c.github, href: profile.github, icon: <GithubIcon size={20} />, external: true },
+    ...(profile.linkedin
+      ? [{ label: c.linkedin, href: profile.linkedin, icon: <LinkedinIcon size={20} />, external: true }]
+      : []),
+    ...(profile.cv
+      ? [{ label: c.cv, href: profile.cv, icon: <FileDown size={20} aria-hidden="true" />, external: false, download: true }]
+      : []),
   ]
 
   return (
@@ -98,22 +166,31 @@ export function ContactChat() {
           <p className="section__lead">{offline ? c.offlineHint : c.lead}</p>
 
           <div className="contact__actions">
-            <button className="btn btn--primary" onClick={copyEmail}>
+            <a className="btn btn--primary" href={whatsappHref(c.whatsappText)} target="_blank" rel="noreferrer">
+              <WhatsappIcon size={20} />
+              {c.whatsapp}
+            </a>
+            <button className="btn btn--outline" onClick={copyEmail}>
               <Copy size={18} aria-hidden="true" />
               {c.copy}
             </button>
-            <a className="contact__email" href={`mailto:${profile.email}`}>
-              {profile.email}
-            </a>
           </div>
+          <a className="contact__email" href={`mailto:${profile.email}`}>
+            {profile.email}
+          </a>
 
           <ul className="contact__links">
             {links.map((l) => (
               <li key={l.href}>
-                <a className="btn btn--outline" href={l.href} target="_blank" rel="noreferrer">
+                <a
+                  className="btn btn--outline"
+                  href={l.href}
+                  {...(l.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                  {...('download' in l && l.download ? { download: '' } : {})}
+                >
                   {l.icon}
                   {l.label}
-                  <ArrowUpRight size={16} aria-hidden="true" />
+                  {l.external && <ArrowUpRight size={16} aria-hidden="true" />}
                 </a>
               </li>
             ))}
@@ -139,55 +216,96 @@ export function ContactChat() {
               </p>
             ))}
             <AnimatePresence initial={false}>
-              {msgs.map((m) => (
-                <motion.div
-                  key={m.id}
+              {msgs.map((msg) => (
+                <m.div
+                  key={msg.id}
                   className="bubble-wrap"
                   initial={{ opacity: 0, y: 14, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ type: 'spring', stiffness: 420, damping: 30 }}
                 >
-                  <p className="bubble bubble--out">{m.text}</p>
-                  <span className={`bubble__state${m.status === 'queued' ? ' is-queued' : ''}`}>
-                    {m.status === 'queued' ? (
+                  <p className="bubble bubble--out">{msg.text}</p>
+                  <span className={`bubble__state${msg.status === 'queued' ? ' is-queued' : ''}${msg.status === 'error' ? ' is-error' : ''}`}>
+                    {msg.status === 'queued' && (
                       <>
                         <Clock size={13} aria-hidden="true" /> {c.queued}
                       </>
-                    ) : (
+                    )}
+                    {msg.status === 'sending' && (
+                      <>
+                        <Loader size={13} aria-hidden="true" /> {c.sending}
+                      </>
+                    )}
+                    {msg.status === 'sent' && (
                       <>
                         <Check size={13} aria-hidden="true" /> {c.sent}
                       </>
                     )}
+                    {msg.status === 'error' && (
+                      <>
+                        <AlertCircle size={13} aria-hidden="true" /> {c.failed} {c.failedHint}{' '}
+                        <button type="button" className="bubble__retry" onClick={() => void deliver([msg])}>
+                          {c.retry}
+                        </button>
+                      </>
+                    )}
                   </span>
-                </motion.div>
+                </m.div>
               ))}
             </AnimatePresence>
           </div>
 
           <form className="chat__form" onSubmit={onSubmit} noValidate>
-            <label>
-              <span className="sr-only">{c.nameLabel}</span>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={c.nameLabel}
-                autoComplete="name"
-              />
-            </label>
+            <div className="chat__presets" role="group" aria-label={c.presetsLabel}>
+              {c.presets.map((p) => (
+                <button key={p.label} type="button" onClick={() => applyPreset(p.text)}>
+                  {p.label}
+                </button>
+              ))}
+            </div>
+            <div className="chat__pair">
+              <label>
+                <span className="sr-only">{c.nameLabel}</span>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder={c.nameLabel}
+                  autoComplete="name"
+                />
+              </label>
+              <label>
+                <span className="sr-only">{c.emailLabel}</span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    if (error === 'email') setError(null)
+                  }}
+                  placeholder={c.emailLabel}
+                  autoComplete="email"
+                  aria-invalid={error === 'email'}
+                  aria-describedby={error === 'email' ? 'chat-error' : undefined}
+                />
+              </label>
+            </div>
+            {/* Campo trampa para bots: oculto a la vista y al teclado. */}
+            <input ref={honeypot} className="chat__hp" type="text" name="botcheck" tabIndex={-1} autoComplete="off" aria-hidden="true" />
             <div className="chat__row">
               <label>
                 <span className="sr-only">{c.messageLabel}</span>
                 <textarea
+                  ref={field}
                   rows={2}
                   value={text}
                   onChange={(e) => {
                     setText(e.target.value)
-                    if (error) setError(false)
+                    if (error === 'empty') setError(null)
                   }}
                   placeholder={c.messageLabel}
-                  aria-invalid={error}
-                  aria-describedby={error ? 'chat-error' : undefined}
+                  aria-invalid={error === 'empty'}
+                  aria-describedby={error === 'empty' ? 'chat-error' : undefined}
                 />
               </label>
               <button type="submit" className="chat__send" aria-label={c.send}>
@@ -196,9 +314,13 @@ export function ContactChat() {
             </div>
             {error && (
               <p className="chat__error" id="chat-error" role="alert">
-                {c.empty}
+                {error === 'email' ? c.emailInvalid : c.empty}
               </p>
             )}
+            <details className="chat__privacy">
+              <summary>{c.privacyTitle}</summary>
+              <p>{c.privacy}</p>
+            </details>
           </form>
         </div>
       </div>

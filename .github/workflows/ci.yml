@@ -1,0 +1,53 @@
+name: CI
+
+# Comprueba cada cambio antes de que llegue a producción: lint, build con prerender,
+# pruebas end-to-end con accesibilidad (axe) y umbrales de Lighthouse.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      # Con SITE_URL el build escribe canonical, hreflang y sitemap, y las pruebas los verifican.
+      SITE_URL: https://josedanielgarcia.dev
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # tsc + vite build + prerender (dist/index.html y dist/en/index.html)
+      - run: npm run build
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm test
+        env:
+          CI: 'true'
+
+      # Umbrales en lighthouserc.json: accesibilidad 100, SEO ≥ 95; rendimiento y buenas prácticas avisan.
+      - name: Lighthouse CI
+        run: npx --yes @lhci/cli@0.14.x autorun
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: informes
+          path: |
+            playwright-report
+            test-results
+            .lighthouseci
+          retention-days: 7

@@ -1,5 +1,5 @@
 import { Plane } from 'lucide-react'
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
 import './AirplaneSwitch.css'
@@ -18,14 +18,14 @@ export function AirplaneSwitch({ compact = false }: { compact?: boolean }) {
       className={`plane-switch${compact ? ' plane-switch--compact' : ''}`}
       onClick={toggle}
     >
-      <motion.span
+      <m.span
         className="plane-switch__knob"
         layout
         transition={{ type: 'spring', stiffness: 500, damping: 32 }}
         style={{ justifySelf: offline ? 'end' : 'start' }}
       >
         <Plane size={compact ? 14 : 16} aria-hidden="true" />
-      </motion.span>
+      </m.span>
     </button>
   )
 }

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 
 interface NetworkValue {
   /** Modo avión simulado: la web entera se comporta como si no hubiera red. */
@@ -9,9 +9,20 @@ interface NetworkValue {
 const NetworkContext = createContext<NetworkValue | null>(null)
 
 export function NetworkProvider({ children }: { children: ReactNode }) {
-  const [offline, setOffline] = useState(() => new URLSearchParams(location.search).get('offline') === '1')
+  // Empieza siempre en línea (también en el servidor) y ?offline=1 se aplica tras hidratar.
+  const [offline, setOffline] = useState(false)
 
   useEffect(() => {
+    if (new URLSearchParams(location.search).get('offline') === '1') setOffline(true)
+  }, [])
+
+  const first = useRef(true)
+  useEffect(() => {
+    // El script de index.html ya pone data-offline antes de pintar: el primer montaje no lo pisa.
+    if (first.current) {
+      first.current = false
+      return
+    }
     document.documentElement.dataset.offline = offline ? 'true' : 'false'
   }, [offline])
 

@@ -1,0 +1,23 @@
+.quotes {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+
+.quote {
+  padding: clamp(1.3rem, 3vw, 2rem);
+}
+
+.quote blockquote {
+  max-width: 44rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.quote figcaption {
+  margin-top: 0.9rem;
+  color: var(--muted);
+}

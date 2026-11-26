@@ -12,13 +12,13 @@
   --mint: #2ec98a;
   --mint-ink: #0b6b47;
 
-  --accent: var(--signal);
+  --accent: #2a60ee; /* 5,2:1 con texto blanco (AA); --signal #2f6bff solo se usa en las maquetas */
   --accent-ink: #ffffff;
-  --accent-text: #1e56e8;
+  --accent-text: #1a4fd6;
   --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
 
-  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-body: 'Instrument Sans', system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-body: 'Instrument Sans Variable', system-ui, sans-serif;
 
   --r-phone: 44px;
   --r-card: 20px;
@@ -48,7 +48,7 @@
 :root[data-offline='true'] {
   --accent: var(--amber);
   --accent-ink: #1b1200;
-  --accent-text: #9a5b00;
+  --accent-text: #8a5100;
 }
 
 :root[data-offline='true'][data-theme='dark'] {
@@ -161,7 +161,20 @@ h4 {
 
 .section {
   padding: clamp(4.5rem, 10vw, 8rem) 0;
+  /* El navegador no calcula estilos ni layout de las secciones que aún no se ven: el primer pintado
+     deja de pagar el coste de toda la página. 'auto' recuerda el alto real tras la primera vez. */
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 900px;
 }
+
+#servicios { contain-intrinsic-block-size: auto 1150px; }
+#proyectos { contain-intrinsic-block-size: auto 1250px; }
+#se7en { contain-intrinsic-block-size: auto 2500px; }
+#jfood { contain-intrinsic-block-size: auto 3900px; }
+#stack { contain-intrinsic-block-size: auto 800px; }
+#enfoque { contain-intrinsic-block-size: auto 1500px; }
+#faq { contain-intrinsic-block-size: auto 700px; }
+#contacto { contain-intrinsic-block-size: auto 850px; }
 
 .section__title {
   font-size: clamp(2.4rem, 6vw, 4.6rem);
@@ -265,4 +278,23 @@ h4 {
 .chip--mint {
   background: color-mix(in srgb, var(--mint) 18%, transparent);
   color: var(--mint-ink);
+}
+
+/* Enlace para saltar al contenido: solo se ve al enfocarlo con el teclado. */
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--cloud);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
 }

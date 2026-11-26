@@ -1,8 +1,9 @@
-import { ArrowUp, Mail } from 'lucide-react'
+import { ArrowUp, Mail, Phone } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
 import { profile } from '../data/profile'
-import { GithubIcon, LinkedinIcon } from './BrandIcons'
+import { GithubIcon, LinkedinIcon, WhatsappIcon } from './BrandIcons'
+import { whatsappHref } from '../lib/contact'
 import './Footer.css'
 
 export function Footer() {
@@ -11,6 +12,7 @@ export function Footer() {
   const f = t.footer
 
   const explore = [
+    { href: '#servicios', label: t.nav.services },
     { href: '#proyectos', label: t.nav.project },
     { href: '#stack', label: t.nav.stack },
     { href: '#enfoque', label: t.nav.approach },
@@ -21,6 +23,8 @@ export function Footer() {
     { href: profile.github, label: 'GitHub', icon: <GithubIcon size={18} />, external: true },
     ...(profile.linkedin ? [{ href: profile.linkedin, label: 'LinkedIn', icon: <LinkedinIcon size={18} />, external: true }] : []),
     { href: `mailto:${profile.email}`, label: 'Email', icon: <Mail size={18} aria-hidden="true" />, external: false },
+    { href: profile.phoneHref, label: profile.phone, icon: <Phone size={18} aria-hidden="true" />, external: false },
+    { href: whatsappHref(t.contact.whatsappText), label: 'WhatsApp', icon: <WhatsappIcon size={18} />, external: true },
   ]
 
   return (
@@ -63,7 +67,7 @@ export function Footer() {
       <div className="wrap">
         <div className="footer__bar">
           <p>
-            {new Date().getFullYear()} {profile.name}. {f.built}
+            <span suppressHydrationWarning>{new Date().getFullYear()}</span> {profile.name}. {f.built}
           </p>
           <span className={`footer__status${offline ? ' is-off' : ''}`}>
             <i aria-hidden="true" />

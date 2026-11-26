@@ -8,8 +8,10 @@
   .projects {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .project--featured {
-    grid-column: span 2;
+  /* Los destacados ocupan la fila entera; la tarjeta "Siguiente proyecto" también, como una barra. */
+  .project--featured,
+  .project--next {
+    grid-column: 1 / -1;
   }
 }
 
@@ -38,7 +40,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0.9rem;
-  max-width: 34rem;
+  max-width: 38rem;
 }
 
 .project__text h3 {
@@ -78,9 +80,40 @@
 
 /* Arte del destacado: solo aparece donde hay sitio al lado del texto. */
 @media (max-width: 639px) {
-  .ring-art {
+  .ring-art,
+  .scores-art {
     display: none;
   }
+}
+
+.scores-art {
+  display: grid;
+  flex: none;
+  justify-items: center;
+  gap: 1rem;
+  width: min(100%, 15rem);
+  margin: 0 auto;
+}
+
+.scores-art ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.scores-art li {
+  padding: 0.15rem 0.7rem;
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--mint) 18%, transparent);
+  color: var(--mint-ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.scores-art b {
+  font-family: var(--font-display);
+  font-weight: 800;
 }
 
 .ring-art {
@@ -132,4 +165,17 @@
 
 .project__card--next .btn {
   margin-top: 0.4rem;
+}
+
+@media (min-width: 900px) {
+  .project__card--next {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .project__card--next .btn {
+    margin-top: 0;
+  }
 }

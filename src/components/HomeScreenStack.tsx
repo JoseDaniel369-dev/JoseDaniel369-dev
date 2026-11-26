@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m, type PanInfo } from 'motion/react'
 import { useI18n } from '../i18n/I18nContext'
-import { dockIds, inkFor, stackApps, type StackApp } from '../data/stack'
+import { dockIds, inkFor, stackApps, stackPages, type StackApp, type StackPage } from '../data/stack'
 import './HomeScreenStack.css'
 
 function AppIcon({ app, selected, onPick, label }: { app: StackApp; selected: boolean; onPick: () => void; label: string }) {
@@ -21,12 +21,26 @@ function AppIcon({ app, selected, onPick, label }: { app: StackApp; selected: bo
 export function HomeScreenStack() {
   const { t } = useI18n()
   const s = t.stack
+  const [page, setPage] = useState<StackPage>('apps')
   const [selectedId, setSelectedId] = useState('sqlite')
 
   const selected = stackApps.find((a) => a.id === selectedId)!
   const info = s.items[selectedId]
   const dock = dockIds.map((id) => stackApps.find((a) => a.id === id)!)
-  const grid = stackApps.filter((a) => !dockIds.includes(a.id))
+  const grid = stackApps.filter((a) => a.page === page)
+
+  /** Al cambiar de página se selecciona su primera ficha, para que el detalle no se quede en otra página. */
+  function goTo(next: StackPage) {
+    if (next === page) return
+    setPage(next)
+    setSelectedId(stackApps.find((a) => a.page === next)!.id)
+  }
+
+  function onDragEnd(_: unknown, info: PanInfo) {
+    const i = stackPages.indexOf(page)
+    if (info.offset.x < -50 && i < stackPages.length - 1) goTo(stackPages[i + 1])
+    if (info.offset.x > 50 && i > 0) goTo(stackPages[i - 1])
+  }
 
   return (
     <section className="section" id="stack" aria-labelledby="stack-title">
@@ -38,16 +52,49 @@ export function HomeScreenStack() {
 
         <div className="home">
           <div className="home__screen" role="group" aria-label={s.homeLabel}>
-            <div className="home__grid">
-              {grid.map((a) => (
-                <AppIcon
-                  key={a.id}
-                  app={a}
-                  label={s.items[a.id].name}
-                  selected={selectedId === a.id}
-                  onPick={() => setSelectedId(a.id)}
+            <m.div
+              className="home__pages"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.25}
+              onDragEnd={onDragEnd}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <m.div
+                  key={page}
+                  className="home__grid"
+                  initial={{ opacity: 0, x: page === 'web' ? 28 : -28 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: page === 'web' ? -28 : 28 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  {grid.map((a) => (
+                    <AppIcon
+                      key={a.id}
+                      app={a}
+                      label={s.items[a.id].name}
+                      selected={selectedId === a.id}
+                      onPick={() => setSelectedId(a.id)}
+                    />
+                  ))}
+                </m.div>
+              </AnimatePresence>
+            </m.div>
+
+            <div className="home__dots" role="group" aria-label={s.pagesLabel}>
+              {stackPages.map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  aria-pressed={page === p}
+                  aria-label={s.pages[p]}
+                  title={s.pages[p]}
+                  onClick={() => goTo(p)}
                 />
               ))}
+              <span className="home__page-name" aria-hidden="true">
+                {s.pages[page]}
+              </span>
             </div>
 
             <div className="home__dock">
@@ -64,7 +111,7 @@ export function HomeScreenStack() {
           </div>
 
           <AnimatePresence mode="wait">
-            <motion.article
+            <m.article
               key={selectedId}
               className="detail card spot"
               aria-live="polite"
@@ -83,7 +130,7 @@ export function HomeScreenStack() {
               </span>
               <h3>{info.name}</h3>
               <p>{info.where}</p>
-            </motion.article>
+            </m.article>
           </AnimatePresence>
         </div>
       </div>

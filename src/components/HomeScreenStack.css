@@ -30,6 +30,10 @@
   overflow: hidden;
 }
 
+.home__pages {
+  min-height: 11.6rem;
+}
+
 .home__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -72,17 +76,60 @@
 
 .app__name {
   max-width: 100%;
-  overflow: hidden;
   font-size: 0.7rem;
   font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.15;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+/* Puntos de página, como en la pantalla de inicio de un móvil. */
+.home__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  margin-top: auto;
+}
+
+.home__dots button {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* El punto es visual; la zona táctil del botón mide 24 px (WCAG 2.2). */
+.home__dots button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.home__dots button[aria-pressed='true']::before {
+  background: #fff;
+  transform: scale(1.25);
+}
+
+.home__page-name {
+  margin-left: 0.4rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .home__dock {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: auto;
   padding: 0.7rem 0.4rem 0.5rem;
   border-radius: 1.6rem;
   background: rgba(255, 255, 255, 0.2);

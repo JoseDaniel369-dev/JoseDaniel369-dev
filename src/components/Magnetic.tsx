@@ -1,5 +1,5 @@
 import type { PointerEvent, ReactNode } from 'react'
-import { motion, useReducedMotion, useSpring } from 'motion/react'
+import { m, useReducedMotion, useSpring } from 'motion/react'
 
 /** El contenido se acerca ligeramente al cursor. Solo con ratón y sin "reduce motion". */
 export function Magnetic({ children, strength = 0.28 }: { children: ReactNode; strength?: number }) {
@@ -20,8 +20,8 @@ export function Magnetic({ children, strength = 0.28 }: { children: ReactNode; s
   }
 
   return (
-    <motion.span style={{ x, y, display: 'inline-flex' }} onPointerMove={onMove} onPointerLeave={reset}>
+    <m.span style={{ x, y, display: 'inline-flex' }} onPointerMove={onMove} onPointerLeave={reset}>
       {children}
-    </motion.span>
+    </m.span>
   )
 }

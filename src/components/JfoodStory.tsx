@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import { ArrowUpRight, Download } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
@@ -56,7 +56,7 @@ export function JfoodStory() {
           <div className="story__phone">
             <Phone label={p.mockCaption}>
               <AnimatePresence mode="wait">
-                <motion.div
+                <m.div
                   key={active + String(offline)}
                   style={{ height: '100%' }}
                   initial={{ opacity: 0, y: 14 }}
@@ -65,7 +65,7 @@ export function JfoodStory() {
                   transition={{ duration: 0.22 }}
                 >
                   <Screen id={active} />
-                </motion.div>
+                </m.div>
               </AnimatePresence>
             </Phone>
             <p className="story__caption">{p.mockCaption}</p>

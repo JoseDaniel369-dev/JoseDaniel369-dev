@@ -1,5 +1,5 @@
-import { ArrowUpRight, Download } from 'lucide-react'
-import { motion } from 'motion/react'
+import { ArrowUpRight, Download, Globe } from 'lucide-react'
+import { m } from 'motion/react'
 import { useI18n } from '../i18n/I18nContext'
 import { profile } from '../data/profile'
 import { projects } from '../data/projects'
@@ -14,7 +14,7 @@ function RingArt() {
       <svg viewBox="0 0 180 180">
         <circle cx="90" cy="90" r={r} fill="none" stroke="var(--line)" strokeWidth="14" />
         <g transform="rotate(-90 90 90)">
-          <motion.circle
+          <m.circle
             cx="90"
             cy="90"
             r={r}
@@ -33,6 +33,47 @@ function RingArt() {
         <strong>1.840</strong>
         kcal
       </span>
+    </div>
+  )
+}
+
+/** Arte del destacado de Se7en: el anillo del rendimiento en móvil y las otras dos puntuaciones de Lighthouse. */
+function ScoresArt({ label, main, a11y, bp }: { label: string; main: string; a11y: string; bp: string }) {
+  const r = 70
+  return (
+    <div className="scores-art" role="img" aria-label={label}>
+      <div className="ring-art" aria-hidden="true">
+        <svg viewBox="0 0 180 180">
+          <circle cx="90" cy="90" r={r} fill="none" stroke="var(--line)" strokeWidth="14" />
+          <g transform="rotate(-90 90 90)">
+            <m.circle
+              cx="90"
+              cy="90"
+              r={r}
+              fill="none"
+              stroke="var(--mint)"
+              strokeWidth="14"
+              strokeLinecap="round"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 0.94 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.4, ease: [0.2, 0.8, 0.2, 1] }}
+            />
+          </g>
+        </svg>
+        <span>
+          <strong>94</strong>
+          {main}
+        </span>
+      </div>
+      <ul aria-hidden="true">
+        <li>
+          <b>100</b> {a11y}
+        </li>
+        <li>
+          <b>100</b> {bp}
+        </li>
+      </ul>
     </div>
   )
 }
@@ -71,6 +112,12 @@ export function Projects() {
                           <ArrowUpRight size={18} aria-hidden="true" />
                         </a>
                       )}
+                      {pr.site && (
+                        <a className="btn btn--outline" href={pr.site} target="_blank" rel="noreferrer">
+                          <Globe size={18} aria-hidden="true" />
+                          {p.site}
+                        </a>
+                      )}
                       {pr.repo && (
                         <a className="btn btn--outline" href={pr.repo} target="_blank" rel="noreferrer">
                           {p.code}
@@ -84,7 +131,10 @@ export function Projects() {
                       )}
                     </div>
                   </div>
-                  {pr.featured && <RingArt />}
+                  {pr.art === 'ring' && <RingArt />}
+                  {pr.art === 'scores' && (
+                    <ScoresArt label={p.scoresLabel} main={p.scoresMain} a11y={p.scoresA11y} bp={p.scoresBp} />
+                  )}
                 </article>
               </li>
             )
@@ -92,8 +142,10 @@ export function Projects() {
 
           <li className="project project--next">
             <article className="project__card project__card--next">
-              <h3>{p.nextTitle}</h3>
-              <p>{p.nextText}</p>
+              <div>
+                <h3>{p.nextTitle}</h3>
+                <p>{p.nextText}</p>
+              </div>
               <a className="btn btn--outline" href={profile.github} target="_blank" rel="noreferrer">
                 <GithubIcon size={18} />
                 {p.nextCta}

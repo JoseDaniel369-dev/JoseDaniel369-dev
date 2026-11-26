@@ -67,6 +67,7 @@
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
+  white-space: nowrap;
   color: var(--muted);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -107,6 +108,11 @@
   border-color: var(--ink);
 }
 
+a.icon-btn {
+  color: inherit;
+  text-decoration: none;
+}
+
 .icon-btn--text {
   border-radius: var(--r-pill);
   font-weight: 700;
@@ -117,15 +123,19 @@
   display: inline-grid;
 }
 
-@media (min-width: 820px) {
+@media (min-width: 960px) {
   .bar__links {
     display: flex;
   }
-  .bar__signal {
-    display: inline-flex;
-  }
   .bar__menu {
     display: none;
+  }
+}
+
+/* Con cinco enlaces, el indicador de señal solo cabe en pantallas anchas. */
+@media (min-width: 1100px) {
+  .bar__signal {
+    display: inline-flex;
   }
 }
 
@@ -156,7 +166,7 @@
   background: var(--accent-soft);
 }
 
-@media (min-width: 820px) {
+@media (min-width: 960px) {
   .sheet {
     display: none;
   }
@@ -176,4 +186,52 @@
   gap: 0.5rem;
   padding-top: 0.45rem;
   padding-bottom: 0.45rem;
+}
+
+/* «Contacto» siempre a la vista como llamada a la acción. */
+.bar__links a.bar__cta {
+  margin-left: 0.4rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.bar__links a.bar__cta:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+  filter: brightness(1.08);
+}
+
+.sheet a.sheet__cta {
+  margin-top: 0.3rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-align: center;
+}
+
+/* Botón de búsqueda (abre la paleta de comandos): solo en pantallas con sitio para él. */
+.bar__search {
+  display: none;
+  gap: 0.45rem;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.bar__search kbd {
+  font-family: inherit;
+  color: var(--muted);
+}
+
+@media (min-width: 640px) {
+  .bar__search {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1239px) {
+  /* En anchos intermedios solo el icono, para no apretar la barra. */
+  .bar__search kbd {
+    display: none;
+  }
 }

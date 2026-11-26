@@ -1,4 +1,7 @@
+import { FileDown } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
+import { profile } from '../data/profile'
+import { Avatar } from './Avatar'
 import './Principles.css'
 
 /** Tarjetas tipo notificación que se apilan con el scroll (sticky escalonado, sin JS). */
@@ -14,6 +17,16 @@ export function Principles() {
             {a.title}
           </h2>
           <p className="section__lead">{a.lead}</p>
+          <div className="about">
+            <Avatar alt={t.hero.photoAlt} size={88} />
+            <p>{a.about}</p>
+            {profile.cv && (
+              <a className="btn btn--outline" href={profile.cv} download>
+                <FileDown size={18} aria-hidden="true" />
+                {t.contact.cv}
+              </a>
+            )}
+          </div>
         </div>
         <ol className="notifs">
           {a.items.map((it, i) => (

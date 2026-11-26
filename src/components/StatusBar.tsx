@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion, useScroll } from 'motion/react'
-import { BatteryFull, Menu, Moon, Plane, Signal, SignalZero, Sun, Wifi, WifiOff, X } from 'lucide-react'
+import { AnimatePresence, m, useScroll } from 'motion/react'
+import { BatteryFull, Menu, Moon, Plane, Search, Signal, SignalZero, Sun, Wifi, WifiOff, X } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
 import type { Theme } from '../hooks/useTheme'
 import { AirplaneSwitch } from './AirplaneSwitch'
+import { OPEN_PALETTE } from './CommandPalette'
 import './StatusBar.css'
 
+/** La hora real solo existe en el navegador: el HTML prerenderizado la deja vacía y la rellena al montar. */
 function useClock(lang: string) {
-  const [now, setNow] = useState(() => new Date())
+  const [now, setNow] = useState<Date | null>(null)
   useEffect(() => {
+    setNow(new Date())
     const id = window.setInterval(() => setNow(new Date()), 15_000)
     return () => window.clearInterval(id)
   }, [])
-  return new Intl.DateTimeFormat(lang, { hour: '2-digit', minute: '2-digit' }).format(now)
+  return now ? new Intl.DateTimeFormat(lang, { hour: '2-digit', minute: '2-digit' }).format(now) : ''
 }
 
 interface Props {
@@ -22,17 +25,21 @@ interface Props {
 }
 
 export function StatusBar({ theme, onToggleTheme }: Props) {
-  const { t, lang, toggle: toggleLang } = useI18n()
+  const { t, lang, otherHref } = useI18n()
   const { offline } = useNetwork()
   const time = useClock(lang)
+  // La tecla que se muestra depende del sistema; se decide tras montar para no desajustar la hidratación.
+  const [isMac, setIsMac] = useState(false)
+  useEffect(() => setIsMac(/Mac|iPhone|iPad/.test(navigator.platform)), [])
   const [open, setOpen] = useState(false)
   const { scrollYProgress } = useScroll()
 
   const links = [
+    { href: '#servicios', label: t.nav.services },
     { href: '#proyectos', label: t.nav.project },
     { href: '#stack', label: t.nav.stack },
     { href: '#enfoque', label: t.nav.approach },
-    { href: '#contacto', label: t.nav.contact },
+    { href: '#contacto', label: t.nav.contact, cta: true },
   ]
 
   useEffect(() => {
@@ -45,16 +52,16 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
   return (
     <header className="bar">
       <div className="bar__main">
-        <motion.i className="bar__progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
+        <m.i className="bar__progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
         <div className="bar__inner wrap">
           <time className="bar__time">{time}</time>
-          <a className="bar__logo" href="#top" aria-label={t.hero.name}>
+          <a className="bar__logo" href="#top" aria-label={`JD, ${t.hero.name}`}>
             JD
           </a>
 
           <nav className="bar__links" aria-label={t.bar.nav}>
             {links.map((l) => (
-              <a key={l.href} href={l.href}>
+              <a key={l.href} href={l.href} className={l.cta ? 'bar__cta' : undefined}>
                 {l.label}
               </a>
             ))}
@@ -66,9 +73,32 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
               {offline ? <WifiOff size={18} /> : <Wifi size={18} />}
               <BatteryFull size={20} />
             </span>
-            <button className="icon-btn icon-btn--text" onClick={toggleLang} aria-label={t.bar.lang}>
-              {t.bar.langShort}
+            <button
+              type="button"
+              className="icon-btn bar__search"
+              aria-label={t.palette.trigger}
+              aria-keyshortcuts="Control+K Meta+K"
+              onClick={() => window.dispatchEvent(new Event(OPEN_PALETTE))}
+            >
+              <Search size={16} aria-hidden="true" />
+              <kbd aria-hidden="true">{isMac ? '⌘K' : 'Ctrl K'}</kbd>
             </button>
+            <a
+              className="icon-btn icon-btn--text"
+              href={otherHref}
+              hrefLang={lang === 'es' ? 'en' : 'es'}
+              lang={lang === 'es' ? 'en' : 'es'}
+              aria-label={`${t.bar.langShort}: ${t.bar.lang}`}
+              onClick={(e) => {
+                // Conserva la sección en la que estabas al cambiar de idioma.
+                if (location.hash) {
+                  e.preventDefault()
+                  location.href = otherHref + location.hash
+                }
+              }}
+            >
+              {t.bar.langShort}
+            </a>
             <button className="icon-btn" onClick={onToggleTheme} aria-label={t.bar.theme}>
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
@@ -88,7 +118,7 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
 
       <AnimatePresence>
         {open && (
-          <motion.nav
+          <m.nav
             id="menu-sheet"
             className="sheet"
             aria-label={t.bar.nav}
@@ -98,17 +128,17 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
             transition={{ type: 'spring', stiffness: 380, damping: 32 }}
           >
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+              <a key={l.href} href={l.href} className={l.cta ? 'sheet__cta' : undefined} onClick={() => setOpen(false)}>
                 {l.label}
               </a>
             ))}
-          </motion.nav>
+          </m.nav>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {offline && (
-          <motion.div
+          <m.div
             className="banner"
             role="status"
             initial={{ height: 0, opacity: 0 }}
@@ -119,7 +149,7 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
               <Plane size={16} aria-hidden="true" />
               {t.bar.offlineBanner}
             </p>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

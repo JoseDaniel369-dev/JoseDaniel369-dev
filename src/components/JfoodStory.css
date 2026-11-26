@@ -131,13 +131,21 @@
     min-height: min(62vh, 26rem);
     padding: 0 0 0 1.5rem;
     border-left: 3px solid var(--line);
-    opacity: 0.38;
-    transition: opacity 0.3s ease, border-color 0.3s ease;
+    transition: border-color 0.3s ease;
+  }
+
+  /* El paso activo manda con el borde y el color de título; los demás siguen legibles (contraste AA). */
+  .step h3 {
+    color: var(--muted);
+    transition: color 0.3s ease;
   }
 
   .step[data-active='true'] {
     border-left-color: var(--accent);
-    opacity: 1;
+  }
+
+  .step[data-active='true'] h3 {
+    color: var(--ink);
   }
 
   .step h3 {

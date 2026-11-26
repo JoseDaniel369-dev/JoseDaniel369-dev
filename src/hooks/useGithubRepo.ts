@@ -45,24 +45,26 @@ async function getJson<T>(url: string, signal: AbortSignal): Promise<T> {
 
 /**
  * Datos públicos de JfooD. Con red los pide a GitHub; sin red (o si GitHub falla)
- * enseña la última copia guardada en el navegador.
+ * enseña la última copia guardada en el navegador. `enabled` evita gastar peticiones (GitHub limita
+ * a 60 por hora e IP sin cuenta) hasta que alguien está a punto de ver el panel.
  */
-export function useGithubRepo(offline: boolean): RepoState {
-  const [state, setState] = useState<RepoState>(() => {
-    const c = readCache()
-    return c ? { repo: c.data, at: c.at, live: false } : { repo: EMPTY, at: null, live: false }
-  })
+export function useGithubRepo(offline: boolean, enabled = true): RepoState {
+  // Empieza vacío (igual en servidor y cliente) y la copia guardada se lee al montar.
+  const [state, setState] = useState<RepoState>({ repo: EMPTY, at: null, live: false })
 
   useEffect(() => {
+    if (!enabled) return
+    const cached = readCache()
     if (offline) {
-      setState((s) => ({ ...s, live: false }))
+      setState(cached ? { repo: cached.data, at: cached.at, live: false } : { repo: EMPTY, at: null, live: false })
       return
     }
-    const cached = readCache()
     if (cached && Date.now() - cached.at < TTL) {
       setState({ repo: cached.data, at: cached.at, live: true })
       return
     }
+    // Mientras llegan los datos nuevos, se enseña lo último guardado.
+    if (cached) setState({ repo: cached.data, at: cached.at, live: false })
     const ctrl = new AbortController()
     const base = `https://api.github.com/repos/${profile.jfood.owner}/${profile.jfood.repo}`
 
@@ -94,7 +96,7 @@ export function useGithubRepo(offline: boolean): RepoState {
     })
 
     return () => ctrl.abort()
-  }, [offline])
+  }, [offline, enabled])
 
   return state
 }

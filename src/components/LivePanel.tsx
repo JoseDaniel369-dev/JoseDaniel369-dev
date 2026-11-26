@@ -1,4 +1,5 @@
-import { motion } from 'motion/react'
+import { useRef } from 'react'
+import { m, useInView } from 'motion/react'
 import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
 import { profile } from '../data/profile'
@@ -10,19 +11,23 @@ const COLORS = ['var(--accent)', 'var(--mint)', 'var(--muted)']
 export function LivePanel() {
   const { t, lang } = useI18n()
   const { offline } = useNetwork()
-  const { repo, at, live } = useGithubRepo(offline)
+  const ref = useRef<HTMLElement>(null)
+  // Solo se consulta GitHub cuando el panel está a punto de verse, no en cada visita.
+  const near = useInView(ref, { once: true, margin: '300px 0px' })
+  const { repo, at, live } = useGithubRepo(offline, near)
   const p = t.project
 
   const cells = [
     { k: p.livePush, v: repo.pushedAt ? formatRelative(repo.pushedAt, lang, t.time.unknown) : null },
     { k: p.liveRelease, v: repo.release ?? (at ? null : `v${profile.jfood.fallbackVersion}`) },
-    { k: p.liveStars, v: repo.stars === null ? null : String(repo.stars) },
+    // Con 0 estrellas el dato resta más que suma: solo se muestra cuando hay alguna.
+    { k: p.liveStars, v: repo.stars ? String(repo.stars) : null },
   ].filter((c): c is { k: string; v: string } => c.v !== null)
 
   const hasData = at !== null
 
   return (
-    <aside className="live card spot" aria-label={p.liveTitle}>
+    <section ref={ref} className="live card spot" aria-label={p.liveTitle}>
       <header className="live__head">
         <h3>{p.liveTitle}</h3>
         {hasData && (
@@ -48,7 +53,7 @@ export function LivePanel() {
             <div className="live__langs">
               <div className="live__bar" role="img" aria-label={repo.languages.map((l) => `${l.name} ${l.pct}%`).join(', ')}>
                 {repo.languages.map((l, i) => (
-                  <motion.i
+                  <m.i
                     key={l.name}
                     style={{ background: COLORS[i] }}
                     initial={{ width: 0 }}
@@ -70,6 +75,6 @@ export function LivePanel() {
           )}
         </>
       )}
-    </aside>
+    </section>
   )
 }

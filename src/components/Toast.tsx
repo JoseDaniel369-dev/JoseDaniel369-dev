@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, m } from 'motion/react'
 import './Toast.css'
 
 /** Aviso flotante de estado. `message` vacío = oculto. */
@@ -7,7 +7,7 @@ export function Toast({ message }: { message: string }) {
     <div className="toast-region" role="status" aria-live="polite">
       <AnimatePresence>
         {message && (
-          <motion.p
+          <m.p
             key={message}
             className="toast"
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
@@ -16,7 +16,7 @@ export function Toast({ message }: { message: string }) {
             transition={{ type: 'spring', stiffness: 420, damping: 30 }}
           >
             {message}
-          </motion.p>
+          </m.p>
         )}
       </AnimatePresence>
     </div>

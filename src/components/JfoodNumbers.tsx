@@ -3,7 +3,7 @@ import { animate, useInView, useReducedMotion } from 'motion/react'
 import { useI18n } from '../i18n/I18nContext'
 import './JfoodNumbers.css'
 
-function CountUp({ to, prefix = '', suffix = '' }: { to: number; prefix?: string; suffix?: string }) {
+export function CountUp({ to, prefix = '', suffix = '' }: { to: number; prefix?: string; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' })
   const reduce = useReducedMotion()

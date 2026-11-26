@@ -1,0 +1,301 @@
+.s7__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.2rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.s7__status i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--amber);
+}
+
+.s7__status.is-live {
+  background: color-mix(in srgb, var(--mint) 18%, transparent);
+  color: var(--mint-ink);
+}
+
+.s7__status.is-live i {
+  background: var(--mint);
+}
+
+.s7__note {
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn:disabled:hover {
+  transform: none;
+}
+
+/* Maquetas: navegador y móvil */
+.s7__shots {
+  display: grid;
+  gap: 2rem;
+  align-items: end;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+@media (min-width: 900px) {
+  .s7__shots {
+    grid-template-columns: minmax(0, 1fr) 17.5rem;
+    gap: 2.5rem;
+  }
+}
+
+.s7__phone {
+  display: grid;
+  justify-items: center;
+}
+
+.s7__caption {
+  margin: 1rem auto 0;
+}
+
+/* Contenido de la portada de escritorio. Las medidas van en cqw para que escale con el marco. */
+.browser__page {
+  container-type: inline-size;
+}
+
+.dm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-size: 1.5cqw;
+}
+
+.dm__nav {
+  display: flex;
+  align-items: center;
+  gap: 2.2em;
+  padding: 1.4em 3em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.dm__nav b {
+  margin-right: auto;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.6em;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+.dm__cta {
+  padding: 0.5em 1.2em;
+  background: #e60609;
+  color: #fff;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  transform: skewX(-8deg);
+}
+
+.dm__hero {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 3em;
+  align-items: center;
+  padding: 0 3em;
+}
+
+.dm__copy {
+  display: grid;
+  gap: 1.4em;
+  justify-items: start;
+}
+
+.dm__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 4.2em;
+  font-style: italic;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.dm__next {
+  display: grid;
+  gap: 0.15em;
+  padding: 0.7em 1em;
+  border-left: 0.35em solid #e60609;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dm__next span {
+  color: #ff6b6e;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dm__next strong {
+  font-family: var(--font-display);
+  font-size: 1.6em;
+}
+
+.dm__btns {
+  display: flex;
+  gap: 1em;
+}
+
+.dm__btns span {
+  padding: 0.7em 1.4em;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  transform: skewX(-8deg);
+}
+
+.dm__btns .dm__fill {
+  border-color: #e60609;
+  background: #e60609;
+}
+
+/* Marco en paralelogramo como el de la web, con las cintas oblicuas donde irá la foto. */
+.dm__frame {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: #e60609;
+  clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%);
+}
+
+.dm__frame i {
+  position: absolute;
+  inset: 0.9em 0 0 0.9em;
+  background: repeating-linear-gradient(115deg, #1b1212 0 1.2em, #251818 1.2em 2.4em);
+  clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%);
+}
+
+/* Qué construí */
+.s7__block {
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+
+.s7__h {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+}
+
+.s7__built {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+@media (min-width: 640px) {
+  .s7__built {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .s7__built {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.s7__built li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1.3rem;
+}
+
+.s7__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.4rem;
+  border-radius: 0.8rem;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.s7__built h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.s7__built p {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+/* Marketing que llevo */
+.s7__marketing {
+  display: grid;
+  gap: 2rem;
+  margin-top: 1.4rem;
+  padding: clamp(1.3rem, 3vw, 2rem);
+}
+
+@media (min-width: 760px) {
+  .s7__marketing {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem;
+  }
+}
+
+.s7__marketing h4 {
+  margin-bottom: 0.8rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.s7__marketing ul {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.s7__marketing li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.s7__marketing li svg {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--mint-ink);
+}
+
+.s7__tech {
+  margin-top: 2rem;
+}
+
+.s7__challenge {
+  max-width: 42rem;
+  margin-top: 0.8rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+@media (min-width: 1100px) {
+  /* Cuatro decisiones: dos columnas se leen mejor que tres con un hueco. */
+  .s7__challenge + .s7__built {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

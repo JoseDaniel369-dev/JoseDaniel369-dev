@@ -32,10 +32,14 @@ jobs:
       # BASE: el repo se llama JoseDaniel369-dev, así que Pages lo sirve en /JoseDaniel369-dev/.
       # SITE_URL activa canonical, Open Graph con URL absoluta, sitemap.xml y la URL en los datos estructurados.
       # Cuando compres josedanielgarcia.dev: pon BASE: / y SITE_URL: https://josedanielgarcia.dev
+      # `npm run build` ya prerenderiza las dos páginas (/ y /en/).
       - run: npm run build
         env:
           BASE: /JoseDaniel369-dev/
           SITE_URL: https://josedaniel369-dev.github.io/JoseDaniel369-dev
+          # Clave pública de web3forms.com (Settings > Secrets and variables > Actions > Variables > WEB3FORMS_KEY).
+          # Sin ella el formulario de contacto cae a mailto:.
+          VITE_WEB3FORMS_KEY: ${{ vars.WEB3FORMS_KEY }}
 
       - uses: actions/configure-pages@v5
 

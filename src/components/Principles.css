@@ -58,3 +58,17 @@
   margin-top: 0.4rem;
   color: var(--muted);
 }
+
+/* Sobre mí: ocupa el hueco que queda bajo el título en la columna fija. */
+.about {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  max-width: 30rem;
+  margin-top: 2rem;
+}
+
+.about p {
+  color: var(--muted);
+  font-size: 1.05rem;
+}

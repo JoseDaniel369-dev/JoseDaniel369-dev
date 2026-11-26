@@ -337,3 +337,90 @@
   border-radius: 50%;
   background: #fff;
 }
+
+/* ───────── Pantalla de la web de Se7en (colores de su marca, solo dentro de la maqueta) ───────── */
+.scr--se7en {
+  gap: 0.9rem;
+  background: #0a0505;
+  color: #fff;
+}
+
+.s7__logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+.s7__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.75rem;
+  font-style: italic;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.s7__next {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.7rem 0.8rem;
+  border-left: 4px solid #e60609;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.s7__next span {
+  color: #ff6b6e;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.s7__next strong {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  line-height: 1.1;
+}
+
+.s7__next em {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-style: normal;
+}
+
+.s7__btns {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.s7__btns span {
+  padding: 0.65rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  transform: skewX(-8deg);
+}
+
+.s7__btns .s7__btn--fill {
+  border-color: #e60609;
+  background: #e60609;
+}
+
+/* Sobre una pantalla oscura, la hora y la barra inferior pasan a blanco. */
+.phone:has(.scr--se7en) .phone__status {
+  color: #fff;
+}
+
+.phone:has(.scr--se7en) .phone__status svg {
+  color: #ffb340;
+}
+
+.phone:has(.scr--se7en) .phone__home {
+  background: #fff;
+}

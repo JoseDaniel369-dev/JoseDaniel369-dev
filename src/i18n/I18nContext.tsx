@@ -1,48 +1,31 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useMemo, type ReactNode } from 'react'
 import { es, type Dict } from './es'
 import { en } from './en'
+import { pathFor, type Lang } from './lang'
 
-export type Lang = 'es' | 'en'
+export type { Lang } from './lang'
 
 interface I18nValue {
   lang: Lang
   t: Dict
-  toggle: () => void
+  /** URL del otro idioma: el botón ES/EN es un enlace normal, no un estado. */
+  otherHref: string
 }
 
 const I18nContext = createContext<I18nValue | null>(null)
 
-function initialLang(): Lang {
-  try {
-    const saved = localStorage.getItem('lang')
-    if (saved === 'es' || saved === 'en') return saved
-  } catch {
-    /* sin almacenamiento: seguimos con el idioma del navegador */
-  }
-  return navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en'
-}
-
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>(initialLang)
-
+/** El idioma viene de la URL (la fija quien renderiza), así servidor y cliente coinciden siempre. */
+export function I18nProvider({ lang, children }: { lang: Lang; children: ReactNode }) {
   useEffect(() => {
-    document.documentElement.lang = lang
+    // Con el HTML prerenderizado ya viene bien; esto cubre el modo desarrollo.
     const dict = lang === 'es' ? es : en
+    document.documentElement.lang = lang
     document.title = dict.docTitle
     document.querySelector('meta[name="description"]')?.setAttribute('content', dict.docDescription)
-    try {
-      localStorage.setItem('lang', lang)
-    } catch {
-      /* ignorar */
-    }
   }, [lang])
 
   const value = useMemo<I18nValue>(
-    () => ({
-      lang,
-      t: lang === 'es' ? es : en,
-      toggle: () => setLang((l) => (l === 'es' ? 'en' : 'es')),
-    }),
+    () => ({ lang, t: lang === 'es' ? es : en, otherHref: pathFor(lang === 'es' ? 'en' : 'es') }),
     [lang],
   )
 
