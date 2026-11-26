@@ -9,4 +9,4 @@ Tech stack
 TypeScript · React Native · Expo · Node.js · Fastify · SQLite 
 
 Contact
-. josedanielgarcialeon4@gmail.com
+josedanielgarcialeon4@gmail.com
