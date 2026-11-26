@@ -1,0 +1,22 @@
+.legal {
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.legal__wrap {
+  max-width: 48rem;
+}
+
+.legal__block {
+  margin-top: 2.2rem;
+}
+
+.legal__block h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.legal__block p {
+  margin-top: 0.6rem;
+  color: var(--muted);
+}

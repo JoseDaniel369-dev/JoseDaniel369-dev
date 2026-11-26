@@ -29,7 +29,7 @@ export function LivePanel() {
   return (
     <section ref={ref} className="live card spot" aria-label={p.liveTitle}>
       <header className="live__head">
-        <h3>{p.liveTitle}</h3>
+        <h2>{p.liveTitle}</h2>
         {hasData && (
           <span className={`chip${live ? ' chip--mint' : ''}`}>
             {live ? p.liveFresh : `${p.liveCached} ${formatRelative(at, lang, t.time.unknown)}`}

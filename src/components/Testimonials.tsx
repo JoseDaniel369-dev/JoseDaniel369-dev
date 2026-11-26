@@ -9,7 +9,7 @@ export function Testimonials({ project }: { project?: string }) {
   if (!list.length) return null
 
   return (
-    <div className="quotes" aria-label={t.se7en.testimonialLabel}>
+    <div className="quotes" role="group" aria-label={t.se7en.testimonialLabel}>
       {list.map((q) => (
         <figure className="quote card" key={q.name}>
           <blockquote>{q.quote[lang]}</blockquote>

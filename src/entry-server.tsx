@@ -1,15 +1,17 @@
 import { renderToString } from 'react-dom/server'
 import { I18nProvider } from './i18n/I18nContext'
 import { NetworkProvider } from './context/NetworkContext'
-import type { Lang } from './i18n/lang'
+import type { Lang, Page } from './routes'
 import { es } from './i18n/es'
 import { en } from './i18n/en'
 import App from './App'
 
-/** Usado por scripts/prerender.mjs: devuelve el HTML de la web entera en un idioma. */
-export function render(lang: Lang): string {
+export { indexablePages, langs, paths } from './routes'
+
+/** Usado por scripts/prerender.mjs: devuelve el HTML de una página en un idioma. */
+export function render(lang: Lang, page: Page): string {
   return renderToString(
-    <I18nProvider lang={lang}>
+    <I18nProvider lang={lang} page={page}>
       <NetworkProvider>
         <App />
       </NetworkProvider>

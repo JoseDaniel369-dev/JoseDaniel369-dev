@@ -23,9 +23,24 @@ export const profile = {
   // Mientras esté vacío, el acceso a LinkedIn no se muestra.
   linkedin: '',
 
+  // Enlace para reservar una llamada (Cal.com, Calendly…), p. ej. 'https://cal.com/tu-usuario/30min'.
+  // Mientras esté vacío, el botón «Reservar una llamada» no se muestra.
+  booking: '',
+
+  // Datos del titular para el aviso legal. Mientras estén vacíos, no se muestran.
+  legal: {
+    // NIF o DNI, si facturas como autónomo.
+    nif: '',
+  },
+
+  // Repositorio de esta web (público).
+  portfolio: {
+    repoUrl: 'https://github.com/JoseDaniel369-dev/JoseDaniel369-dev',
+  },
+
   // Web de Se7en Antequera (proyecto para un cliente; el repositorio es privado).
   // Al lanzar la definitiva: cambia siteUrl por el dominio propio, pon launched en true
-  // y actualiza la misma URL en vite.config.ts (bloque WebSite).
+  // y actualiza la misma URL en scripts/seo-data.mjs.
   se7en: {
     siteUrl: 'https://se7enmartialartsgymweb.josedanielgarcialeon4.workers.dev/',
     launched: false,

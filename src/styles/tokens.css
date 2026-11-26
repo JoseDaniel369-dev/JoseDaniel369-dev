@@ -167,27 +167,89 @@ h4 {
   contain-intrinsic-block-size: auto 900px;
 }
 
-#servicios { contain-intrinsic-block-size: auto 1150px; }
-#proyectos { contain-intrinsic-block-size: auto 1250px; }
-#se7en { contain-intrinsic-block-size: auto 2500px; }
-#jfood { contain-intrinsic-block-size: auto 3900px; }
-#stack { contain-intrinsic-block-size: auto 800px; }
-#enfoque { contain-intrinsic-block-size: auto 1500px; }
-#faq { contain-intrinsic-block-size: auto 700px; }
-#contacto { contain-intrinsic-block-size: auto 850px; }
+/* Solo la portada, que es larga, se salta el pintado de lo que queda fuera de pantalla. Las demás páginas tienen una
+   única sección: con un alto estimado de 900 px, el pie saltaba al pintarse la sección (CLS en la 404). */
+.case,
+.legal,
+.notfound,
+.casecta {
+  content-visibility: visible;
+}
+
+/* Alto estimado de cada sección mientras no se pinta (medido en móvil, tableta y escritorio). Si fuera mucho menor
+   que el real, la página saltaría al llegar a ellas y la posición de lo de debajo sería errónea. */
+#servicios { contain-intrinsic-block-size: auto 3700px; }
+#clientes { contain-intrinsic-block-size: auto 1170px; }
+#proyectos { contain-intrinsic-block-size: auto 3370px; }
+#proceso { contain-intrinsic-block-size: auto 1250px; }
+#sobre-mi { contain-intrinsic-block-size: auto 2000px; }
+#stack { contain-intrinsic-block-size: auto 1060px; }
+#faq { contain-intrinsic-block-size: auto 750px; }
+#contacto { contain-intrinsic-block-size: auto 1700px; }
+
+@media (min-width: 600px) {
+  #servicios { contain-intrinsic-block-size: auto 2950px; }
+  #clientes { contain-intrinsic-block-size: auto 1000px; }
+  #proyectos { contain-intrinsic-block-size: auto 2950px; }
+  #proceso { contain-intrinsic-block-size: auto 1030px; }
+  #sobre-mi { contain-intrinsic-block-size: auto 1730px; }
+  #stack { contain-intrinsic-block-size: auto 1010px; }
+  #faq { contain-intrinsic-block-size: auto 680px; }
+  #contacto { contain-intrinsic-block-size: auto 1260px; }
+}
+
+@media (min-width: 1000px) {
+  #servicios { contain-intrinsic-block-size: auto 1800px; }
+  #clientes { contain-intrinsic-block-size: auto 750px; }
+  #proyectos { contain-intrinsic-block-size: auto 2050px; }
+  #proceso { contain-intrinsic-block-size: auto 710px; }
+  #sobre-mi { contain-intrinsic-block-size: auto 1350px; }
+  #stack { contain-intrinsic-block-size: auto 850px; }
+  #faq { contain-intrinsic-block-size: auto 680px; }
+  #contacto { contain-intrinsic-block-size: auto 1040px; }
+}
 
 .section__title {
-  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-size: clamp(2.1rem, 4.8vw, 3.6rem);
   font-weight: 700;
   font-stretch: 90%;
-  line-height: 1;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
 }
 
 .section__lead {
-  max-width: 34rem;
+  max-width: 38rem;
   margin-top: 1rem;
   color: var(--muted);
-  font-size: 1.2rem;
+  font-size: 1.18rem;
+}
+
+/* Cabecera de sección: etiqueta numerada + título + entradilla. */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.9rem;
+  color: var(--accent-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.eyebrow span {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow span::after {
+  content: '';
+  display: inline-block;
+  width: 1.6rem;
+  height: 1px;
+  margin-left: 0.7rem;
+  vertical-align: middle;
+  background: var(--line);
 }
 
 .btn {
@@ -203,8 +265,22 @@ h4 {
   transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s ease, border-color 0.3s ease;
 }
 
+.btn--lg {
+  padding: 1rem 1.55rem;
+  font-size: 1.04rem;
+}
+
 .btn:hover {
   transform: translateY(-2px);
+}
+
+/* Microinteracción: la flecha de un botón se desplaza un poco al señalarlo. */
+.btn .lucide-arrow-up-right {
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn:hover .lucide-arrow-up-right {
+  transform: translate(2px, -2px);
 }
 
 .btn:active {

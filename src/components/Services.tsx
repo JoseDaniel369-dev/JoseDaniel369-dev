@@ -1,91 +1,119 @@
-import { ArrowUpRight, LayoutTemplate, MapPin, RefreshCw, Search, type LucideIcon } from 'lucide-react'
+import { ArrowUpRight, Check, LayoutTemplate, MessagesSquare, Smartphone, Workflow, Wrench, type LucideIcon } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
-import { useNetwork } from '../context/NetworkContext'
 import { Magnetic } from './Magnetic'
-import { WhatsappIcon } from './BrandIcons'
-import { whatsappHref } from '../lib/contact'
+import { QuoteLink } from './QuoteLink'
+import { SectionHead } from './SectionHead'
 import './Services.css'
 
 const icons: Record<string, LucideIcon> = {
   web: LayoutTemplate,
-  seo: Search,
-  google: MapPin,
-  care: RefreshCw,
+  software: Smartphone,
+  automation: Workflow,
 }
 
-/** Lo que ofrezco a un negocio: web, SEO, ficha de Google y mantenimiento. Va justo tras el marquee. */
+/** Lo que vendo, ordenado como lo compra un cliente: qué problema resuelve, para quién y qué entrega. */
 export function Services() {
-  const { t } = useI18n()
-  const { offline } = useNetwork()
+  const { t, href } = useI18n()
   const s = t.services
 
   return (
     <section className="section" id="servicios" aria-labelledby="services-title">
       <div className="wrap">
-        <h2 id="services-title" className="section__title">
-          {s.title}
-        </h2>
-        <p className="section__lead" aria-live="polite">
-          {offline ? s.leadOffline : s.lead}
-        </p>
+        <SectionHead n={1} eyebrow={s.eyebrow} title={s.title} lead={s.lead} id="services-title" />
 
-        <ul className="services" aria-label={s.itemsLabel}>
-          {s.items.map((it) => {
+        <ul className="services">
+          {s.items.map((it, i) => {
             const Icon = icons[it.id]
             return (
               <li key={it.id}>
-                <article className="service card spot">
-                  <span className="service__icon" aria-hidden="true">
-                    <Icon size={22} />
-                  </span>
+                <article className="service card">
+                  <header className="service__head">
+                    <span className="service__icon" aria-hidden="true">
+                      <Icon size={22} />
+                    </span>
+                    <span className="service__n" aria-hidden="true">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </header>
                   <h3>{it.t}</h3>
-                  <p>{it.d}</p>
+
+                  <dl className="service__facts">
+                    <div>
+                      <dt>{s.problemLabel}</dt>
+                      <dd>{it.problem}</dd>
+                    </div>
+                    <div>
+                      <dt>{s.forLabel}</dt>
+                      <dd>{it.who}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="service__inc">
+                    <p className="service__label">{s.includesLabel}</p>
+                    <ul>
+                      {it.includes.map((x) => (
+                        <li key={x}>
+                          <Check size={17} aria-hidden="true" />
+                          <span>{x}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <p className="service__proof">
+                    {s.proofLabel}{' '}
+                    <a href={href(it.proof.page)}>
+                      {it.proof.label}
+                      <ArrowUpRight size={15} aria-hidden="true" />
+                    </a>
+                  </p>
+
+                  <Magnetic>
+                    <QuoteLink className="btn btn--primary" preset={{ type: it.type }}>
+                      {s.cta}
+                      <ArrowUpRight size={18} aria-hidden="true" />
+                    </QuoteLink>
+                  </Magnetic>
                 </article>
               </li>
             )
           })}
         </ul>
 
-        <div className="process">
-          <h3 className="process__title">{s.processTitle}</h3>
-          <ol className="process__steps">
-            {s.steps.map((st, i) => (
-              <li key={st.t}>
-                <span className="process__n" aria-hidden="true">
-                  {i + 1}
-                </span>
-                <div>
-                  <h4>{st.t}</h4>
-                  <p>{st.d}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="proof card">
-          <div>
-            <p className="proof__text">{s.proof}</p>
-            <a className="proof__link" href="#se7en">
-              {s.proofCta}
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
-          </div>
-          <div className="proof__cta">
-            <div className="proof__btns">
-              <Magnetic>
-                <a className="btn btn--primary" href="#contacto">
-                  {s.cta}
-                  <ArrowUpRight size={18} aria-hidden="true" />
-                </a>
-              </Magnetic>
-              <a className="btn btn--outline" href={whatsappHref(t.contact.whatsappText)} target="_blank" rel="noreferrer">
-                <WhatsappIcon size={18} />
-                WhatsApp
-              </a>
+        <div className="extras">
+          <article className="extra card">
+            <span className="service__icon" aria-hidden="true">
+              <Wrench size={22} />
+            </span>
+            <div>
+              <h3>{s.maintenance.t}</h3>
+              <p>{s.maintenance.d}</p>
             </div>
-            <p className="proof__quote">{t.hero.quote}</p>
-          </div>
+            <QuoteLink className="btn btn--outline" preset={{ type: s.maintenance.type }}>
+              {s.maintenance.cta}
+            </QuoteLink>
+          </article>
+
+          <article className="assess">
+            <span className="assess__icon" aria-hidden="true">
+              <MessagesSquare size={22} />
+            </span>
+            <h3>{s.assessment.t}</h3>
+            <p>{s.assessment.d}</p>
+            <ul>
+              {s.assessment.includes.map((x) => (
+                <li key={x}>
+                  <Check size={17} aria-hidden="true" />
+                  <span>{x}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="assess__not">{s.assessment.not}</p>
+            <QuoteLink className="btn assess__btn" preset={{ intent: 'call' }}>
+              {s.assessment.cta}
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </QuoteLink>
+          </article>
         </div>
       </div>
     </section>

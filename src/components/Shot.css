@@ -1,0 +1,31 @@
+/* Captura real dentro de un marco (BrowserFrame o Phone): rellena el marco y alinea por arriba. */
+.shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  background: #0a0505;
+}
+
+/* En un teléfono, la captura baja bajo la isla y la barra de estado, que pasa a texto claro sobre fondo oscuro. */
+.phone:has(.shot--mobile) .phone__screen {
+  background: #0a0505;
+}
+
+.phone:has(.shot--mobile) .phone__status {
+  color: #fff;
+}
+
+.phone:has(.shot--mobile) .phone__status svg {
+  color: #ffb340;
+}
+
+.phone:has(.shot--mobile) .phone__home {
+  background: #fff;
+}
+
+.phone .shot--mobile {
+  height: calc(100% - 1.9rem);
+  margin-top: 1.9rem;
+}

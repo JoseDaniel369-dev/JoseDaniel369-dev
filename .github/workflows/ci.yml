@@ -17,6 +17,8 @@ jobs:
     env:
       # Con SITE_URL el build escribe canonical, hreflang y sitemap, y las pruebas los verifican.
       SITE_URL: https://josedanielgarcia.dev
+      # Clave falsa: el formulario "envía" por Web3Forms y las pruebas interceptan la petición (no se envía nada real).
+      VITE_WEB3FORMS_KEY: e2e-test-key
     steps:
       - uses: actions/checkout@v4
 

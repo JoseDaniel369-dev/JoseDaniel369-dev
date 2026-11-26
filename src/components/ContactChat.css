@@ -6,7 +6,7 @@
 
 @media (min-width: 900px) {
   .contact {
-    grid-template-columns: minmax(0, 1fr) 26rem;
+    grid-template-columns: minmax(0, 1fr) 28rem;
     gap: 4rem;
   }
 }
@@ -80,7 +80,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  height: 17rem;
+  max-height: 15rem;
   padding: 1rem;
   overflow-y: auto;
   background: var(--surface-2);
@@ -135,8 +135,9 @@
   border-top: 1px solid var(--line);
 }
 
-.chat__form input,
-.chat__form textarea {
+.chat__form input:not([type='radio']),
+.chat__form textarea,
+.chat__form select {
   width: 100%;
   padding: 0.7rem 0.9rem;
   border: 1.5px solid var(--line);
@@ -148,8 +149,9 @@
   transition: border-color 0.2s ease;
 }
 
-.chat__form input:focus,
-.chat__form textarea:focus {
+.chat__form input:not([type='radio']):focus,
+.chat__form textarea:focus,
+.chat__form select:focus {
   outline: none;
   border-color: var(--accent);
 }
@@ -191,28 +193,6 @@
 
 :root[data-theme='dark'] .chat__error {
   color: #ff8a80;
-}
-
-/* Mensajes rápidos: rellenan el cuadro de texto con una frase lista para enviar. */
-.chat__presets {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.chat__presets button {
-  padding: 0.3rem 0.8rem;
-  border: 1.5px solid var(--line);
-  border-radius: var(--r-pill);
-  background: var(--surface);
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.chat__presets button:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
 }
 
 /* Formulario real: nombre y email lado a lado cuando hay sitio. */
@@ -277,4 +257,123 @@
 .contact__email {
   display: inline-block;
   margin-top: 0.9rem;
+}
+
+/* Desplegable de presupuesto: misma caja que los campos de texto. */
+.chat__form select {
+  appearance: none;
+  padding-right: 2.2rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 1.15rem) 55%, calc(100% - 0.8rem) 55%;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* Brief: intención (presupuesto o llamada) como control segmentado. */
+.chat__form fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+.seg__opt,
+.tchip {
+  position: relative;
+  cursor: pointer;
+}
+
+.seg__opt input,
+.tchip input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.seg__opt span {
+  display: block;
+  padding: 0.5rem 0.4rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.seg__opt input:checked + span {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Tipo de proyecto: chips con el mismo gesto que un botón de opción. */
+.types legend {
+  margin-bottom: 0.4rem;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.types div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tchip span {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.tchip:hover span {
+  border-color: var(--accent);
+}
+
+.tchip input:checked + span {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.seg__opt input:focus-visible + span,
+.tchip input:focus-visible + span {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Datos del brief bajo el mensaje enviado, y la respuesta que confirma la recepción. */
+.bubble__meta {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.bubble--reply {
+  align-self: flex-start;
+  margin-top: 0.3rem;
+}
+
+.chat__privacy a {
+  color: inherit;
+  text-underline-offset: 2px;
 }

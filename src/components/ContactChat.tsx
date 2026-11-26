@@ -1,12 +1,24 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { AnimatePresence, m } from 'motion/react'
-import { AlertCircle, ArrowUpRight, Check, Clock, Copy, FileDown, Loader, Phone, Send } from 'lucide-react'
+import { AlertCircle, ArrowUpRight, CalendarCheck, Check, Clock, Copy, FileDown, Loader, Phone, Send } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
 import { profile } from '../data/profile'
-import { hasForm, loadQueue, openMail, saveQueue, sendMessage, whatsappHref, type Outgoing } from '../lib/contact'
+import {
+  budgetKeys,
+  intents,
+  PRESET_BRIEF,
+  presetFromSearch,
+  projectTypes,
+  type BriefPreset,
+  type BudgetKey,
+  type Intent,
+  type ProjectType,
+} from '../lib/brief'
+import { hasForm, loadQueue, openMail, saveQueue, sendMessage, subjectFor, whatsappHref, type Outgoing } from '../lib/contact'
 import { Avatar } from './Avatar'
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from './BrandIcons'
+import { SectionHead } from './SectionHead'
 import { Toast } from './Toast'
 import './ContactChat.css'
 
@@ -17,24 +29,31 @@ interface Msg extends Outgoing {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
+/** Contacto: canales directos y un brief (tipo de proyecto, presupuesto, mensaje) con forma de conversación. */
 export function ContactChat() {
-  const { t } = useI18n()
+  const { t, href } = useI18n()
   const { offline } = useNetwork()
   const c = t.contact
   const [msgs, setMsgs] = useState<Msg[]>([])
+  const [intent, setIntent] = useState<Intent>('quote')
+  const [type, setType] = useState<ProjectType | ''>('')
+  const [budget, setBudget] = useState<BudgetKey | ''>('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [company, setCompany] = useState('')
   const [text, setText] = useState('')
   const [error, setError] = useState<'empty' | 'email' | null>(null)
   const [toast, setToast] = useState('')
   const toastTimer = useRef(0)
   const wasOffline = useRef(offline)
   const thread = useRef<HTMLDivElement>(null)
-  const field = useRef<HTMLTextAreaElement>(null)
   const honeypot = useRef<HTMLInputElement>(null)
   // Copia síncrona de los mensajes para los envíos (evita cierres con datos viejos).
   const msgsRef = useRef<Msg[]>([])
   msgsRef.current = msgs
+  // Mensajes que ya están en camino o entregados: evita enviar dos veces el mismo (p. ej. si se sale del
+  // modo avión justo cuando se restaura la cola de una visita anterior).
+  const delivered = useRef(new Set<string>())
   const offlineRef = useRef(offline)
   offlineRef.current = offline
 
@@ -50,21 +69,51 @@ export function ContactChat() {
 
   useEffect(() => () => window.clearTimeout(toastTimer.current), [])
 
+  // Un botón de «pedir presupuesto» deja el formulario preparado: por evento (misma página) o por la URL (otra página).
+  useEffect(() => {
+    const apply = (p: BriefPreset) => {
+      if (p.type) setType(p.type)
+      if (p.intent) setIntent(p.intent)
+    }
+    apply(presetFromSearch(location.search))
+    const onPreset = (e: Event) => apply((e as CustomEvent<BriefPreset>).detail)
+    window.addEventListener(PRESET_BRIEF, onPreset)
+    return () => window.removeEventListener(PRESET_BRIEF, onPreset)
+  }, [])
+
   /** Envía los mensajes pendientes. Con formulario real salen uno a uno; sin él se abre un solo correo. */
   const deliver = useCallback(
-    async (pending: Msg[]) => {
+    async (all: Msg[]) => {
+      const pending = all.filter((msg) => !delivered.current.has(msg.id))
       if (!pending.length) return
       if (!hasForm) {
         pending.forEach((msg) => setStatus(msg.id, 'sent'))
-        openMail(pending[0].name, pending.map((msg) => msg.text), c.subject)
+        const body = pending
+          .map((msg) =>
+            [
+              [msg.intent, msg.type].filter(Boolean).join(' · '),
+              [msg.company, msg.budget].filter(Boolean).join(' · '),
+              '',
+              msg.text,
+              '',
+              [msg.name, msg.email].filter(Boolean).join(' · '),
+            ]
+              .join('\n')
+              .trim(),
+          )
+          .join('\n\n---\n\n')
+        openMail(subjectFor(c.subject, pending[0]), body)
         return
       }
       for (const msg of pending) {
+        delivered.current.add(msg.id)
         setStatus(msg.id, 'sending')
         try {
           await sendMessage(msg, c.subject)
           setStatus(msg.id, 'sent')
         } catch {
+          // Si falla, puede reintentarse.
+          delivered.current.delete(msg.id)
           setStatus(msg.id, 'error')
         }
       }
@@ -105,13 +154,7 @@ export function ContactChat() {
 
   useEffect(() => {
     thread.current?.scrollTo({ top: thread.current.scrollHeight, behavior: 'smooth' })
-  }, [msgs.length])
-
-  function applyPreset(preset: string) {
-    setText(preset)
-    setError(null)
-    field.current?.focus()
-  }
+  }, [msgs])
 
   function onSubmit(e: FormEvent) {
     e.preventDefault()
@@ -128,6 +171,10 @@ export function ContactChat() {
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
       name: name.trim(),
       email: mail,
+      company: company.trim(),
+      intent: c.intents[intent],
+      type: type ? c.types[type] : '',
+      budget: budget ? c.budgets[budget] : '',
       text: clean,
       status: offline ? 'queued' : 'sending',
     }
@@ -160,17 +207,20 @@ export function ContactChat() {
     <section className="section" id="contacto" aria-labelledby="contact-title">
       <div className="wrap contact">
         <div className="contact__intro">
-          <h2 id="contact-title" className="section__title">
-            {c.title}
-          </h2>
-          <p className="section__lead">{offline ? c.offlineHint : c.lead}</p>
+          <SectionHead n={8} eyebrow={c.eyebrow} title={c.title} lead={offline ? c.offlineHint : c.lead} id="contact-title" />
 
           <div className="contact__actions">
-            <a className="btn btn--primary" href={whatsappHref(c.whatsappText)} target="_blank" rel="noreferrer">
+            <a className="btn btn--primary btn--lg" href={whatsappHref(c.whatsappText)} target="_blank" rel="noreferrer">
               <WhatsappIcon size={20} />
               {c.whatsapp}
             </a>
-            <button className="btn btn--outline" onClick={copyEmail}>
+            {profile.booking && (
+              <a className="btn btn--outline btn--lg" href={profile.booking} target="_blank" rel="noreferrer">
+                <CalendarCheck size={18} aria-hidden="true" />
+                {c.booking}
+              </a>
+            )}
+            <button type="button" className="btn btn--outline btn--lg" onClick={copyEmail}>
               <Copy size={18} aria-hidden="true" />
               {c.copy}
             </button>
@@ -225,6 +275,9 @@ export function ContactChat() {
                   transition={{ type: 'spring', stiffness: 420, damping: 30 }}
                 >
                   <p className="bubble bubble--out">{msg.text}</p>
+                  {(msg.intent || msg.type) && (
+                    <span className="bubble__meta">{[msg.intent, msg.type].filter(Boolean).join(' · ')}</span>
+                  )}
                   <span className={`bubble__state${msg.status === 'queued' ? ' is-queued' : ''}${msg.status === 'error' ? ' is-error' : ''}`}>
                     {msg.status === 'queued' && (
                       <>
@@ -250,19 +303,44 @@ export function ContactChat() {
                       </>
                     )}
                   </span>
+                  {msg.status === 'sent' && (
+                    <m.p
+                      className="bubble bubble--in bubble--reply"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5, duration: 0.3 }}
+                    >
+                      {hasForm ? c.reply : c.replyMail}
+                    </m.p>
+                  )}
                 </m.div>
               ))}
             </AnimatePresence>
           </div>
 
           <form className="chat__form" onSubmit={onSubmit} noValidate>
-            <div className="chat__presets" role="group" aria-label={c.presetsLabel}>
-              {c.presets.map((p) => (
-                <button key={p.label} type="button" onClick={() => applyPreset(p.text)}>
-                  {p.label}
-                </button>
+            <fieldset className="seg">
+              <legend className="sr-only">{c.intentLabel}</legend>
+              {intents.map((i) => (
+                <label key={i} className="seg__opt">
+                  <input type="radio" name="intent" value={i} checked={intent === i} onChange={() => setIntent(i)} />
+                  <span>{c.intents[i]}</span>
+                </label>
               ))}
-            </div>
+            </fieldset>
+
+            <fieldset className="types">
+              <legend>{c.typeLabel}</legend>
+              <div>
+                {projectTypes.map((tp) => (
+                  <label key={tp} className="tchip">
+                    <input type="radio" name="type" value={tp} checked={type === tp} onChange={() => setType(tp)} />
+                    <span>{c.types[tp]}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
             <div className="chat__pair">
               <label>
                 <span className="sr-only">{c.nameLabel}</span>
@@ -290,20 +368,42 @@ export function ContactChat() {
                 />
               </label>
             </div>
+            <div className="chat__pair">
+              <label>
+                <span className="sr-only">{c.companyLabel}</span>
+                <input
+                  type="text"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  placeholder={c.companyLabel}
+                  autoComplete="organization"
+                />
+              </label>
+              <label>
+                <span className="sr-only">{c.budgetLabel}</span>
+                <select value={budget} onChange={(e) => setBudget(e.target.value as BudgetKey | '')}>
+                  <option value="">{c.budgetLabel}</option>
+                  {budgetKeys.map((k) => (
+                    <option key={k} value={k}>
+                      {c.budgets[k]}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
             {/* Campo trampa para bots: oculto a la vista y al teclado. */}
             <input ref={honeypot} className="chat__hp" type="text" name="botcheck" tabIndex={-1} autoComplete="off" aria-hidden="true" />
             <div className="chat__row">
               <label>
                 <span className="sr-only">{c.messageLabel}</span>
                 <textarea
-                  ref={field}
-                  rows={2}
+                  rows={3}
                   value={text}
                   onChange={(e) => {
                     setText(e.target.value)
                     if (error === 'empty') setError(null)
                   }}
-                  placeholder={c.messageLabel}
+                  placeholder={c.messagePlaceholder}
                   aria-invalid={error === 'empty'}
                   aria-describedby={error === 'empty' ? 'chat-error' : undefined}
                 />
@@ -319,7 +419,9 @@ export function ContactChat() {
             )}
             <details className="chat__privacy">
               <summary>{c.privacyTitle}</summary>
-              <p>{c.privacy}</p>
+              <p>
+                {c.privacy} <a href={href('legal')}>{c.privacyMore}</a>.
+              </p>
             </details>
           </form>
         </div>

@@ -45,7 +45,7 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--mint) 30%, transparent), var(--shadow);
 }
 
-.arch__node h4 {
+.arch__node h3 {
   display: inline-block;
   margin-right: 0.5rem;
   font-size: 1.6rem;

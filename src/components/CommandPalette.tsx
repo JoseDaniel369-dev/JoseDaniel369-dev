@@ -5,6 +5,7 @@ import { useNetwork } from '../context/NetworkContext'
 import { toggleTheme } from '../hooks/useTheme'
 import { profile } from '../data/profile'
 import { whatsappHref } from '../lib/contact'
+import type { IndexablePage } from '../routes'
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from './BrandIcons'
 import { Toast } from './Toast'
 import './CommandPalette.css'
@@ -36,7 +37,7 @@ const ICON = 17
  * cambiar tema o idioma, activar el modo avión o contactar. Usa <dialog> nativo (foco atrapado y Esc gratis).
  */
 export function CommandPalette() {
-  const { t, otherHref } = useI18n()
+  const { t, otherHref, href, sec } = useI18n()
   const { offline, toggle: toggleOffline } = useNetwork()
   const p = t.palette
   const c = t.contact
@@ -87,11 +88,13 @@ export function CommandPalette() {
   }, [])
 
   const items = useMemo<Item[]>(() => {
-    const goTo = (hash: string) => () => {
+    // `target` es un ancla de esta página (#servicios) o la URL de otra página.
+    const goTo = (target: string) => () => {
       setOpen(false)
       // Tras cerrar el diálogo, para que el scroll suave no pelee con la restauración del foco.
       window.requestAnimationFrame(() => {
-        location.hash = hash
+        if (target.startsWith('#')) location.hash = target
+        else location.href = target
       })
     }
     const openUrl = (url: string) => () => {
@@ -104,18 +107,37 @@ export function CommandPalette() {
       label,
       keywords,
       icon: <ArrowRight size={ICON} aria-hidden="true" />,
-      run: goTo(`#${id}`),
+      run: goTo(sec(id)),
+    })
+    const pageItem = (page: IndexablePage, label: string, keywords: string): Item => ({
+      id: `go-${page}`,
+      group: 'go',
+      label,
+      keywords,
+      icon: <ArrowRight size={ICON} aria-hidden="true" />,
+      run: goTo(href(page)),
     })
 
     const list: Item[] = [
-      nav('servicios', t.nav.services, 'servicios services web negocio seo'),
-      nav('proyectos', t.nav.project, 'proyectos projects trabajos portfolio'),
-      nav('se7en', p.goSe7en, 'se7en gimnasio gym web caso estudio case study'),
-      nav('jfood', p.goJfood, 'jfood app nutricion nutrition android caso estudio case study'),
-      nav('stack', t.nav.stack, 'stack tecnologias tools tecnologias'),
-      nav('enfoque', t.nav.approach, 'sobre mi about como trabajo how i work principios'),
-      nav('faq', p.goFaq, 'faq preguntas frecuentes presupuesto'),
+      nav('servicios', t.nav.services, 'servicios services web software apps automatizacion automation ia ai'),
+      nav('proyectos', t.nav.projects, 'proyectos projects trabajos portfolio'),
+      pageItem('se7en', p.goSe7en, 'se7en gimnasio gym web caso estudio case study cliente client'),
+      pageItem('jfood', p.goJfood, 'jfood app nutricion nutrition android caso estudio case study'),
+      nav('proceso', t.nav.process, 'proceso process pasos steps como trabajo how i work'),
+      nav('sobre-mi', t.nav.about, 'sobre mi about quien soy who principios'),
+      nav('stack', t.nav.stack, 'stack tecnologias technologies tools'),
+      nav('faq', p.goFaq, 'faq preguntas frecuentes precio plazos'),
       nav('contacto', t.nav.contact, 'contacto contact escribir hablar'),
+      pageItem('legal', p.goLegal, 'aviso legal privacidad privacy datos cookies'),
+
+      {
+        id: 'quote',
+        group: 'actions',
+        label: p.quote,
+        keywords: 'presupuesto quote cotizacion propuesta proposal pedir presupuesto llamada call',
+        icon: <ArrowRight size={ICON} aria-hidden="true" />,
+        run: goTo(sec('contacto')),
+      },
 
       {
         id: 'theme',
@@ -254,7 +276,7 @@ export function CommandPalette() {
     return list
     // showToast es estable (solo usa estado y un ref).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [t, offline, otherHref])
+  }, [t, offline, otherHref, href, sec])
 
   function showToast(message: string) {
     setToast(message)

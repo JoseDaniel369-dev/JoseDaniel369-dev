@@ -25,7 +25,7 @@ interface Props {
 }
 
 export function StatusBar({ theme, onToggleTheme }: Props) {
-  const { t, lang, otherHref } = useI18n()
+  const { t, lang, otherHref, sec } = useI18n()
   const { offline } = useNetwork()
   const time = useClock(lang)
   // La tecla que se muestra depende del sistema; se decide tras montar para no desajustar la hidratación.
@@ -35,11 +35,11 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
   const { scrollYProgress } = useScroll()
 
   const links = [
-    { href: '#servicios', label: t.nav.services },
-    { href: '#proyectos', label: t.nav.project },
-    { href: '#stack', label: t.nav.stack },
-    { href: '#enfoque', label: t.nav.approach },
-    { href: '#contacto', label: t.nav.contact, cta: true },
+    { href: sec('servicios'), label: t.nav.services },
+    { href: sec('proyectos'), label: t.nav.projects },
+    { href: sec('proceso'), label: t.nav.process },
+    { href: sec('sobre-mi'), label: t.nav.about },
+    { href: sec('contacto'), label: t.nav.quote, cta: true },
   ]
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export function StatusBar({ theme, onToggleTheme }: Props) {
         <m.i className="bar__progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
         <div className="bar__inner wrap">
           <time className="bar__time">{time}</time>
-          <a className="bar__logo" href="#top" aria-label={`JD, ${t.hero.name}`}>
+          <a className="bar__logo" href={sec('top')} aria-label={`JD, ${t.hero.name}`}>
             JD
           </a>
 

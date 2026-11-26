@@ -1,8 +1,9 @@
 import { Plus } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext'
+import { SectionHead } from './SectionHead'
 import './Faq.css'
 
-/** Preguntas de negocio con <details>: accesibles y legibles por buscadores sin JavaScript. */
+/** Preguntas de una empresa antes de contratar, con <details>: accesibles y legibles por buscadores sin JavaScript. */
 export function Faq() {
   const { t } = useI18n()
   const f = t.faq
@@ -10,9 +11,7 @@ export function Faq() {
   return (
     <section className="section" id="faq" aria-labelledby="faq-title">
       <div className="wrap faq">
-        <h2 id="faq-title" className="section__title">
-          {f.title}
-        </h2>
+        <SectionHead n={7} eyebrow={f.eyebrow} title={f.title} id="faq-title" />
         <div className="faq__list">
           {f.items.map((it) => (
             <details key={it.q} className="faq__item card">

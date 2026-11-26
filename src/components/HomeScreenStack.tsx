@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence, m, type PanInfo } from 'motion/react'
 import { useI18n } from '../i18n/I18nContext'
 import { dockIds, inkFor, stackApps, stackPages, type StackApp, type StackPage } from '../data/stack'
+import { SectionHead } from './SectionHead'
 import './HomeScreenStack.css'
 
 function AppIcon({ app, selected, onPick, label }: { app: StackApp; selected: boolean; onPick: () => void; label: string }) {
@@ -21,8 +22,8 @@ function AppIcon({ app, selected, onPick, label }: { app: StackApp; selected: bo
 export function HomeScreenStack() {
   const { t } = useI18n()
   const s = t.stack
-  const [page, setPage] = useState<StackPage>('apps')
-  const [selectedId, setSelectedId] = useState('sqlite')
+  const [page, setPage] = useState<StackPage>('web')
+  const [selectedId, setSelectedId] = useState('astro')
 
   const selected = stackApps.find((a) => a.id === selectedId)!
   const info = s.items[selectedId]
@@ -45,10 +46,7 @@ export function HomeScreenStack() {
   return (
     <section className="section" id="stack" aria-labelledby="stack-title">
       <div className="wrap">
-        <h2 id="stack-title" className="section__title">
-          {s.title}
-        </h2>
-        <p className="section__lead">{s.lead}</p>
+        <SectionHead n={6} eyebrow={s.eyebrow} title={s.title} lead={s.lead} id="stack-title" />
 
         <div className="home">
           <div className="home__screen" role="group" aria-label={s.homeLabel}>

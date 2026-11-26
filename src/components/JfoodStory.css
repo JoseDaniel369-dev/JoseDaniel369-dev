@@ -1,20 +1,3 @@
-.story__chip {
-  margin-bottom: 1rem;
-}
-
-.story__body {
-  max-width: 38rem;
-  margin-top: 1.4rem;
-  font-size: 1.12rem;
-}
-
-.story__cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 1.6rem;
-}
-
 .story {
   display: grid;
   gap: 1.5rem;

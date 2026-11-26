@@ -1,0 +1,108 @@
+/* Línea de tiempo: horizontal en escritorio y vertical en móvil. */
+.steps {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin-top: clamp(2rem, 5vw, 3rem);
+}
+
+@media (min-width: 960px) {
+  .steps {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.4rem;
+  }
+
+  /* El hilo que une los cinco pasos. */
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 1.05rem;
+    left: 1.05rem;
+    right: 1.05rem;
+    height: 2px;
+    background: var(--line);
+  }
+}
+
+.stepc {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0 0 1.8rem 3.2rem;
+}
+
+.stepc:last-child {
+  padding-bottom: 0;
+}
+
+/* Hilo vertical en móvil. */
+@media (max-width: 959px) {
+  .stepc::before {
+    content: '';
+    position: absolute;
+    top: 2.2rem;
+    bottom: 0;
+    left: 1.05rem;
+    width: 2px;
+    background: var(--line);
+  }
+
+  .stepc:last-child::before {
+    display: none;
+  }
+}
+
+@media (min-width: 960px) {
+  .stepc {
+    align-content: start;
+    padding: 3.2rem 0 0;
+  }
+}
+
+.stepc__n {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cloud);
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.stepc h3 {
+  padding-top: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stepc p {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.stepc .stepc__gets {
+  margin-top: auto;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.75rem;
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.stepc__gets b {
+  display: block;
+  color: var(--accent-text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

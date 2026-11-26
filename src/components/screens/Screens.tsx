@@ -2,9 +2,9 @@ import { m } from 'motion/react'
 import { CloudOff, Download, Upload } from 'lucide-react'
 import { useNetwork } from '../../context/NetworkContext'
 
-export type ScreenId = 'diary' | 'ai' | 'scanner' | 'weight' | 'backup' | 'se7en'
+export type ScreenId = 'diary' | 'ai' | 'scanner' | 'weight' | 'backup'
 
-// La interfaz real de JfooD y la web de Se7en están en español, así que las maquetas no se traducen.
+// La interfaz real de JfooD está en español, así que la maqueta no se traduce.
 const MEALS = [
   { name: 'Desayuno', kcal: 420 },
   { name: 'Comida', kcal: 760 },
@@ -189,29 +189,8 @@ function Backup() {
   )
 }
 
-/** La web de Se7en vista en el móvil: titular, próxima clase y botón de la primera clase gratis. */
-function Se7en() {
-  return (
-    <div className="scr scr--se7en">
-      <p className="s7__logo">SE7EN</p>
-      <p className="s7__title">Jiu-Jitsu, Muay Thai y MMA en Antequera</p>
-      <div className="s7__next">
-        <span>Próxima clase</span>
-        <strong>Hoy, 19:00 · BJJ</strong>
-        <em>Empieza en 2 h 15 min</em>
-      </div>
-      <div className="s7__btns">
-        <span className="s7__btn--fill">Reservar clase gratis</span>
-        <span>Ver horarios</span>
-      </div>
-    </div>
-  )
-}
-
 export function Screen({ id }: { id: ScreenId }) {
   switch (id) {
-    case 'se7en':
-      return <Se7en />
     case 'diary':
       return <Diary />
     case 'ai':

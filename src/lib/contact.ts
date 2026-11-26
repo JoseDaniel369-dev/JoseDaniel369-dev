@@ -1,9 +1,16 @@
 import { profile } from '../data/profile'
 
+/** Un mensaje del formulario. Los campos del brief van ya como texto legible, en el idioma de la visita. */
 export interface Outgoing {
   id: string
   name: string
   email: string
+  company: string
+  /** Qué prefiere: presupuesto o primera conversación. */
+  intent: string
+  /** Tipo de proyecto. */
+  type: string
+  budget: string
   text: string
 }
 
@@ -18,6 +25,11 @@ export function whatsappHref(text: string): string {
   return `https://wa.me/${profile.whatsapp}?text=${encodeURIComponent(text)}`
 }
 
+/** Asunto del correo: «Contacto desde la web · Pedir presupuesto · Web corporativa». */
+export function subjectFor(base: string, msg: Pick<Outgoing, 'intent' | 'type'>): string {
+  return [base, msg.intent, msg.type].filter(Boolean).join(' · ')
+}
+
 /**
  * Envía un mensaje por Web3Forms; lanza un error si no se pudo entregar.
  * Va como FormData (no JSON): así es una petición "simple" del navegador, sin preflight CORS, y la API
@@ -26,10 +38,14 @@ export function whatsappHref(text: string): string {
 export async function sendMessage(msg: Outgoing, subject: string): Promise<void> {
   const body = new FormData()
   body.append('access_key', KEY ?? '')
-  body.append('subject', subject)
+  body.append('subject', subjectFor(subject, msg))
   body.append('from_name', msg.name || 'Portfolio')
   body.append('name', msg.name)
   body.append('email', msg.email)
+  body.append('company', msg.company)
+  body.append('intent', msg.intent)
+  body.append('project_type', msg.type)
+  body.append('budget', msg.budget)
   body.append('message', msg.text)
   const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body })
   const data = (await res.json().catch(() => ({}))) as { success?: boolean; message?: string }
@@ -37,8 +53,7 @@ export async function sendMessage(msg: Outgoing, subject: string): Promise<void>
 }
 
 /** Abre el cliente de correo con el mensaje (alternativa cuando no hay formulario). */
-export function openMail(from: string, texts: string[], subject: string) {
-  const body = `${texts.join('\n\n')}\n\n${from}`
+export function openMail(subject: string, body: string) {
   window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
@@ -48,7 +63,18 @@ const QUEUE_KEY = 'contact-queue-v1'
 export function loadQueue(): Outgoing[] {
   try {
     const raw = localStorage.getItem(QUEUE_KEY)
-    return raw ? (JSON.parse(raw) as Outgoing[]) : []
+    const list = raw ? (JSON.parse(raw) as Partial<Outgoing>[]) : []
+    // Los mensajes guardados por una versión anterior no traen los campos del brief.
+    return list.map((q) => ({
+      id: q.id ?? `${Date.now()}`,
+      name: q.name ?? '',
+      email: q.email ?? '',
+      company: q.company ?? '',
+      intent: q.intent ?? '',
+      type: q.type ?? '',
+      budget: q.budget ?? '',
+      text: q.text ?? '',
+    }))
   } catch {
     return []
   }

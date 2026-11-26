@@ -1,10 +1,9 @@
 .hero {
   position: relative;
   isolation: isolate;
-  padding: clamp(1.5rem, 4vw, 3.25rem) 0 clamp(3rem, 7vw, 6rem);
-  background:
-    radial-gradient(52rem 34rem at 88% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
-    radial-gradient(36rem 26rem at 0% 30%, color-mix(in srgb, var(--mint) 12%, transparent), transparent 70%);
+  padding: clamp(1.2rem, 3vw, 2.2rem) 0 clamp(3rem, 7vw, 5.5rem);
+  /* Un solo brillo de acento: da profundidad sin competir con el titular. */
+  background: radial-gradient(52rem 34rem at 88% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
   transition: background 0.5s ease;
 }
 
@@ -29,14 +28,15 @@
 
 @media (min-width: 960px) {
   .hero__inner {
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
   }
 }
 
 .hero__id {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem 0.75rem;
 }
 
 .hero__id p {
@@ -56,20 +56,23 @@
   font-size: 0.92rem;
 }
 
+/* Disponibilidad: en verde con red; en ámbar en modo avión (cambia con el acento). */
 .hero__status {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   margin-left: 0.4rem;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.7rem;
   border-radius: var(--r-pill);
   background: color-mix(in srgb, var(--mint) 18%, transparent);
   color: var(--mint-ink);
   font-size: 0.8rem;
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .hero__status i {
+  flex: none;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
@@ -85,19 +88,20 @@
   background: var(--accent);
 }
 
-@media (max-width: 440px) {
+/* En pantallas estrechas la pastilla baja a su propia línea. */
+@media (max-width: 560px) {
   .hero__status {
-    display: none;
+    margin-left: 0;
   }
 }
 
 .hero__title {
-  max-width: 20ch;
-  margin-top: 1.2rem;
+  max-width: 21ch;
+  margin-top: 1.1rem;
   font-weight: 800;
   font-stretch: 92%;
-  font-size: clamp(2.5rem, 5.6vw, 4.2rem);
-  line-height: 0.96;
+  font-size: clamp(2.3rem, 4.9vw, 3.7rem);
+  line-height: 0.98;
   letter-spacing: -0.032em;
 }
 
@@ -115,8 +119,8 @@
 }
 
 .hero__lead {
-  max-width: 32rem;
-  margin-top: 1.1rem;
+  max-width: 34rem;
+  margin-top: 1rem;
   color: var(--muted);
   font-size: 1.15rem;
 }
@@ -125,19 +129,21 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  margin-top: 1.5rem;
+  margin-top: 1.4rem;
 }
 
-.hero__invite {
+.hero__response {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
-  max-width: 32rem;
-  margin-top: 1.4rem;
-  padding: 0.9rem 1.1rem;
-  font-weight: 600;
-  line-height: 1.35;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.hero__response svg {
+  flex: none;
+  color: var(--accent-text);
 }
 
 .hero__phone {
@@ -145,12 +151,19 @@
   width: 100%;
 }
 
-/* Selector de maqueta bajo el teléfono (JfooD / Se7en). */
+.hero__caption {
+  margin-top: 1.1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* Selector de maqueta bajo el teléfono (Se7en / JfooD). */
 .hero__screens {
   display: flex;
   justify-content: center;
   gap: 0.4rem;
-  margin-top: 1.4rem;
+  margin-top: 0.8rem;
 }
 
 .hero__screens button {
@@ -174,7 +187,7 @@
   opacity: 0.5;
 }
 
-/* En pantallas estrechas el teléfono aparece justo debajo, en el caso de estudio: no se repite. */
+/* En pantallas estrechas las capturas están justo debajo, en Proyectos: no se repiten. */
 @media (max-width: 899px) {
   .hero__phone {
     display: none;
@@ -205,18 +218,12 @@
   }
 }
 
-.hero__quote {
-  margin-top: 0.7rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
 /* Tira de pruebas: visible también en móvil, donde el teléfono se oculta. */
 .hero__proof {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  margin-top: 1.1rem;
+  margin-top: 1.4rem;
 }
 
 .hero__proof a {

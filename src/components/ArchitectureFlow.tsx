@@ -11,14 +11,14 @@ export function ArchitectureFlow() {
 
   return (
     <div className="arch">
-      <h3 className="arch__title">{p.archTitle}</h3>
+      <h2 className="arch__title">{p.archTitle}</h2>
       <ol className="arch__flow">
         {nodes.map((n, i) => {
           const dimmed = offline && i > 0
           return (
             <li className="arch__item" key={n.name}>
               <article className={`arch__node card spot${dimmed ? ' is-dim' : ''}${offline && i === 0 ? ' is-local' : ''}`}>
-                <h4>{n.name}</h4>
+                <h3>{n.name}</h3>
                 {offline && i === 0 && <span className="chip chip--mint">{p.localBadge}</span>}
                 <ul className="arch__tech">
                   {n.tech.map((x) => (

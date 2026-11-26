@@ -1,0 +1,32 @@
+/* Barra fija de «Pedir presupuesto»: solo en móvil y sin efectos de cristal, un fondo sólido. */
+.mcta {
+  display: none;
+}
+
+@media (max-width: 719px) {
+  .mcta {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    display: block;
+    padding: 0.7rem var(--gutter) calc(0.7rem + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+    background: var(--cloud);
+    transform: translateY(105%);
+    visibility: hidden;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 0.3s;
+  }
+
+  .mcta[data-on='true'] {
+    transform: none;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .mcta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

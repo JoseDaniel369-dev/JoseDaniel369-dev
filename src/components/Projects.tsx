@@ -1,113 +1,108 @@
 import { ArrowUpRight, Download, Globe } from 'lucide-react'
-import { m } from 'motion/react'
 import { useI18n } from '../i18n/I18nContext'
 import { profile } from '../data/profile'
-import { projects } from '../data/projects'
+import { projects, type Project } from '../data/projects'
+import { BrowserFrame } from './BrowserFrame'
 import { GithubIcon } from './BrandIcons'
+import { Phone } from './Phone'
+import { QuoteLink } from './QuoteLink'
+import { SectionHead } from './SectionHead'
+import { Shot } from './Shot'
+import { Screen } from './screens/Screens'
 import './Projects.css'
 
-/** Anillo decorativo del proyecto destacado (evoca el contador de calorías de JfooD). */
-function RingArt() {
-  const r = 70
-  return (
-    <div className="ring-art" aria-hidden="true">
-      <svg viewBox="0 0 180 180">
-        <circle cx="90" cy="90" r={r} fill="none" stroke="var(--line)" strokeWidth="14" />
-        <g transform="rotate(-90 90 90)">
-          <m.circle
-            cx="90"
-            cy="90"
-            r={r}
-            fill="none"
-            stroke="var(--accent)"
-            strokeWidth="14"
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 0.84 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, ease: [0.2, 0.8, 0.2, 1] }}
-          />
-        </g>
-      </svg>
-      <span>
-        <strong>1.840</strong>
-        kcal
-      </span>
-    </div>
-  )
-}
+/** Imagen de una tarjeta destacada: captura real de la web de un cliente, o maqueta ilustrativa de la app. */
+function Visual({ project }: { project: Project }) {
+  const { t } = useI18n()
 
-/** Arte del destacado de Se7en: el anillo del rendimiento en móvil y las otras dos puntuaciones de Lighthouse. */
-function ScoresArt({ label, main, a11y, bp }: { label: string; main: string; a11y: string; bp: string }) {
-  const r = 70
-  return (
-    <div className="scores-art" role="img" aria-label={label}>
-      <div className="ring-art" aria-hidden="true">
-        <svg viewBox="0 0 180 180">
-          <circle cx="90" cy="90" r={r} fill="none" stroke="var(--line)" strokeWidth="14" />
-          <g transform="rotate(-90 90 90)">
-            <m.circle
-              cx="90"
-              cy="90"
-              r={r}
-              fill="none"
-              stroke="var(--mint)"
-              strokeWidth="14"
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 0.94 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.4, ease: [0.2, 0.8, 0.2, 1] }}
-            />
-          </g>
-        </svg>
-        <span>
-          <strong>94</strong>
-          {main}
-        </span>
+  if (project.art === 'shot') {
+    return (
+      <div className="project__visual">
+        <BrowserFrame url={new URL(profile.se7en.siteUrl).host}>
+          <Shot
+            project="se7en"
+            name="home"
+            kind="desktop"
+            alt={t.projects.shotAlt}
+            sizes="(min-width: 1200px) 560px, (min-width: 900px) 46vw, 60vw"
+          />
+        </BrowserFrame>
+        <ul className="project__scores" aria-label={`${t.se7en.lighthouseTitle}: ${t.se7en.lighthouseNote}`}>
+          {[
+            [94, t.se7en.perf],
+            [100, t.se7en.a11y],
+            [100, t.se7en.bp],
+          ].map(([v, label]) => (
+            <li key={label}>
+              <b>{v}</b> {label}
+            </li>
+          ))}
+        </ul>
+        <p className="project__caption">{t.hero.captionReal}</p>
       </div>
-      <ul aria-hidden="true">
-        <li>
-          <b>100</b> {a11y}
-        </li>
-        <li>
-          <b>100</b> {bp}
-        </li>
-      </ul>
+    )
+  }
+
+  return (
+    <div className="project__visual project__visual--phone">
+      <Phone label={t.projects.mockLabel}>
+        <Screen id="diary" />
+      </Phone>
+      <p className="project__caption">{t.project.mockCaption}</p>
     </div>
   )
 }
 
 export function Projects() {
-  const { t } = useI18n()
+  const { t, href } = useI18n()
   const p = t.projects
 
   return (
     <section className="section" id="proyectos" aria-labelledby="projects-title">
       <div className="wrap">
-        <h2 id="projects-title" className="section__title">
-          {p.title}
-        </h2>
-        <p className="section__lead">{p.lead}</p>
+        <SectionHead n={3} eyebrow={p.eyebrow} title={p.title} lead={p.lead} id="projects-title" />
 
         <ul className="projects">
-          {projects.map((pr) => {
+          {projects.map((pr, i) => {
             const info = p.items[pr.id]
             return (
-              <li key={pr.id} className={`project${pr.featured ? ' project--featured' : ''}`}>
-                <article className="project__card card spot">
+              <li key={pr.id} className={`project${pr.featured ? ' project--featured' : ''}${i % 2 ? ' project--flip' : ''}`}>
+                <article className="project__card card">
+                  {pr.featured && <Visual project={pr} />}
+
                   <div className="project__text">
-                    <span className="chip">{info.kind}</span>
+                    <div className="project__badges">
+                      <span className={`chip ${pr.kind === 'client' ? 'chip--solid' : 'chip--outline'}`}>
+                        {pr.kind === 'client' ? p.badges.client : p.badges.own}
+                      </span>
+                      <span className="chip">{info.kind}</span>
+                      {pr.oss && <span className="chip chip--mint">{p.badges.oss}</span>}
+                      {pr.preview && <span className="chip chip--amber">{p.badges.preview}</span>}
+                    </div>
+
                     <h3>{info.name}</h3>
-                    <p>{info.summary}</p>
+                    <p className="project__summary">{info.summary}</p>
+
+                    <dl className="project__facts">
+                      <div>
+                        <dt>{p.goalLabel}</dt>
+                        <dd>{info.goal}</dd>
+                      </div>
+                      <div>
+                        <dt>{p.roleLabel}</dt>
+                        <dd>{info.role}</dd>
+                      </div>
+                    </dl>
+
                     <ul className="project__tech" aria-label={p.techLabel}>
                       {pr.tech.map((x) => (
                         <li key={x}>{x}</li>
                       ))}
                     </ul>
+
                     <div className="project__cta">
-                      {pr.caseStudy && (
-                        <a className="btn btn--primary" href={pr.caseStudy}>
+                      {pr.casePage && (
+                        <a className="btn btn--primary" href={href(pr.casePage)}>
                           {p.caseStudy}
                           <ArrowUpRight size={18} aria-hidden="true" />
                         </a>
@@ -120,6 +115,7 @@ export function Projects() {
                       )}
                       {pr.repo && (
                         <a className="btn btn--outline" href={pr.repo} target="_blank" rel="noreferrer">
+                          <GithubIcon size={18} />
                           {p.code}
                         </a>
                       )}
@@ -131,10 +127,6 @@ export function Projects() {
                       )}
                     </div>
                   </div>
-                  {pr.art === 'ring' && <RingArt />}
-                  {pr.art === 'scores' && (
-                    <ScoresArt label={p.scoresLabel} main={p.scoresMain} a11y={p.scoresA11y} bp={p.scoresBp} />
-                  )}
                 </article>
               </li>
             )
@@ -142,14 +134,12 @@ export function Projects() {
 
           <li className="project project--next">
             <article className="project__card project__card--next">
-              <div>
-                <h3>{p.nextTitle}</h3>
-                <p>{p.nextText}</p>
-              </div>
-              <a className="btn btn--outline" href={profile.github} target="_blank" rel="noreferrer">
-                <GithubIcon size={18} />
+              <h3>{p.nextTitle}</h3>
+              <p>{p.nextText}</p>
+              <QuoteLink className="btn btn--primary">
                 {p.nextCta}
-              </a>
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </QuoteLink>
             </article>
           </li>
         </ul>

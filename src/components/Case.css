@@ -1,0 +1,357 @@
+/* ───────── Páginas de caso de estudio ───────── */
+.case {
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.6rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.crumbs li + li::before {
+  content: '/';
+  margin-right: 0.4rem;
+  opacity: 0.6;
+}
+
+.crumbs a {
+  text-underline-offset: 3px;
+}
+
+.crumbs a:hover {
+  color: var(--accent-text);
+}
+
+.crumbs [aria-current] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.case__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.2rem;
+}
+
+.case__body {
+  max-width: 40rem;
+  margin-top: 1.2rem;
+  font-size: 1.12rem;
+}
+
+/* Ficha del proyecto: lo que un cliente quiere saber en cinco segundos. */
+.case__facts {
+  display: grid;
+  gap: 1.1rem 2rem;
+  margin: 2rem 0 0;
+  padding: 1.3rem 0;
+  border-block: 1px solid var(--line);
+}
+
+@media (min-width: 760px) {
+  .case__facts {
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  }
+}
+
+.case__facts dt {
+  color: var(--accent-text);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.case__facts dd {
+  margin: 0.2rem 0 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.case__facts .project__tech {
+  margin-top: 0.3rem;
+}
+
+.case__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}
+
+.case__note {
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn:disabled:hover {
+  transform: none;
+}
+
+/* ───────── Bloques del caso ───────── */
+.cs__block {
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+
+.cs__h {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.cs__lead {
+  max-width: 42rem;
+  margin-top: 0.8rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.cs__grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+@media (min-width: 640px) {
+  .cs__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .cs__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Cuatro decisiones: dos columnas se leen mejor que tres con un hueco. */
+  .cs__grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cs__grid > li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1.3rem;
+}
+
+.cs__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.4rem;
+  border-radius: 0.8rem;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.cs__grid h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.cs__grid p {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+/* Galería de capturas reales */
+.gallery__main {
+  display: grid;
+  gap: 2rem;
+  align-items: end;
+  margin-top: 1.6rem;
+}
+
+@media (min-width: 900px) {
+  .gallery__main {
+    grid-template-columns: minmax(0, 1fr) 17.5rem;
+    gap: 2.5rem;
+  }
+}
+
+.gallery__phone {
+  display: grid;
+  justify-items: center;
+}
+
+.gallery__row {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 760px) {
+  .gallery__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.gallery__note {
+  max-width: 42rem;
+  margin: 1.4rem auto 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+/* Marketing que llevo (Se7en) */
+.s7__marketing {
+  display: grid;
+  gap: 2rem;
+  margin-top: 1.4rem;
+  padding: clamp(1.3rem, 3vw, 2rem);
+}
+
+@media (min-width: 760px) {
+  .s7__marketing {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem;
+  }
+}
+
+.s7__marketing h3 {
+  margin-bottom: 0.8rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.s7__marketing ul,
+.value {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.s7__marketing li,
+.value li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.s7__marketing li svg,
+.value li svg {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--mint-ink);
+}
+
+.value {
+  max-width: 46rem;
+  margin-top: 1.2rem;
+}
+
+.cs__tech {
+  margin-top: 2rem;
+}
+
+/* Prueba del modo avión en el caso de JfooD */
+.demo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem 2rem;
+  margin-top: 1.4rem;
+  padding: 1.2rem 1.4rem;
+}
+
+.demo p {
+  max-width: 34rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ───────── Cierre del caso ───────── */
+.casecta {
+  padding-bottom: clamp(3rem, 7vw, 5rem);
+}
+
+.casecta__card {
+  display: grid;
+  justify-items: start;
+  gap: 0.9rem;
+  padding: clamp(1.6rem, 4vw, 2.6rem);
+  border-radius: var(--r-card);
+  background: var(--ink);
+  color: var(--cloud);
+}
+
+.casecta__card h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.casecta__card p {
+  max-width: 34rem;
+  opacity: 0.85;
+}
+
+.casecta__btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.6rem;
+}
+
+/* Sobre fondo oscuro, el botón principal pasa a claro para no perder contraste. */
+.casecta__card .btn--primary {
+  background: var(--cloud);
+  color: var(--ink);
+}
+
+.casecta__card .btn--outline {
+  border-color: color-mix(in srgb, var(--cloud) 35%, transparent);
+  background: transparent;
+  color: var(--cloud);
+}
+
+.casecta__card .btn--outline:hover {
+  border-color: var(--cloud);
+}
+
+.casecta__next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  margin-top: 1rem;
+  padding: 1.1rem 0.2rem;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.casecta__next span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.casecta__next strong {
+  margin-right: auto;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.casecta__next svg {
+  transition: transform 0.2s ease;
+}
+
+.casecta__next:hover svg {
+  transform: translateX(4px);
+}

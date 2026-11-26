@@ -6,7 +6,8 @@ import './Phone.css'
 
 interface Props {
   children: ReactNode
-  label: string
+  /** Texto accesible de una maqueta dibujada. Si dentro va una captura real con su propio alt, no se pasa. */
+  label?: string
   /** Si es true, el teléfono se inclina siguiendo el puntero (solo con ratón). */
   tilt?: boolean
 }
@@ -35,7 +36,7 @@ export function Phone({ children, label, tilt = false }: Props) {
 
   return (
     <div className="phone-stage" ref={stage}>
-      <m.div className="phone" style={{ rotateX, rotateY }} role="img" aria-label={label}>
+      <m.div className="phone" style={{ rotateX, rotateY }} {...(label ? { role: 'img', 'aria-label': label } : {})}>
         <div className="phone__island" aria-hidden="true" />
         <div className="phone__status" aria-hidden="true">
           <span>9:41</span>

@@ -1,0 +1,81 @@
+/* Tres públicos en columnas separadas por filetes, sin tarjetas: es una lectura rápida, no un catálogo. */
+.clients {
+  display: grid;
+  margin-top: clamp(2rem, 5vw, 3rem);
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 900px) {
+  .clients {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .client + .client {
+    border-left: 1px solid var(--line);
+  }
+}
+
+.client {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 1.6rem 0;
+}
+
+.client + .client {
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 900px) {
+  .client {
+    padding: 2rem clamp(1.2rem, 3vw, 2.2rem);
+  }
+
+  .client:first-child {
+    padding-left: 0;
+  }
+
+  .client + .client {
+    border-top: 0;
+  }
+}
+
+.client__icon {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.85rem;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.client h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.client p {
+  color: var(--muted);
+}
+
+.client__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  color: var(--accent-text);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.client__link svg {
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.client__link:hover svg {
+  transform: translate(2px, -2px);
+}
