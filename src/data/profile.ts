@@ -19,9 +19,9 @@ export const profile = {
 
   github: 'https://github.com/JoseDaniel369-dev',
 
-  // Pega aquí la URL de tu perfil, p. ej. 'https://www.linkedin.com/in/tu-usuario'.
-  // Mientras esté vacío, el acceso a LinkedIn no se muestra.
-  linkedin: '',
+  // Perfil de LinkedIn. Si lo dejas vacío, el acceso a LinkedIn no se muestra.
+  // Misma URL que `linkedin` en scripts/seo-data.mjs (aquí no se puede importar desde allí).
+  linkedin: 'https://www.linkedin.com/in/jos%C3%A9-daniel-garc%C3%ADa-le%C3%B3n-05897b40a/',
 
   // Enlace para reservar una llamada (Cal.com, Calendly…), p. ej. 'https://cal.com/tu-usuario/30min'.
   // Mientras esté vacío, el botón «Reservar una llamada» no se muestra.

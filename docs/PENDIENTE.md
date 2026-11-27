@@ -56,12 +56,13 @@ La web funciona sin esto: cada bloque simplemente no aparece hasta que exista.
 - [ ] **Foto.** Guárdala como `public/foto.jpg` (recomendado: 640 px de ancho y menos de 80 KB) y en
   `src/data/profile.ts` cambia `photo: ''` por `` photo: `${import.meta.env.BASE_URL}foto.jpg` ``.
   Hoy se ve el monograma «JD». Una foto real es lo que más «humaniza» la portada y «Sobre mí».
-- [ ] **LinkedIn.** Pon la URL en `profile.linkedin` (`src/data/profile.ts`) y añádela a `sameAs` en
+- [x] **LinkedIn.** Hecho: URL en `profile.linkedin` (`src/data/profile.ts`) y en `sameAs` de
   `scripts/seo-data.mjs`.
 - [ ] **Enlace para reservar una llamada** (Cal.com o Calendly, gratis) en `profile.booking`. Aparece el botón
   «Reservar una llamada» en Contacto. Sin enlace, no se muestra.
 - [ ] **NIF** en `profile.legal.nif`, si facturas como autónomo. Aparece en el aviso legal.
-- [ ] **CV en PDF.** Guárdalo como `public/cv-jose-daniel-garcia-leon.pdf` y en `profile.ts` pon
+- [ ] **CV en PDF** (descartado a propósito: la web está orientada a captar clientes, no empleo; solo si cambia el
+  objetivo). Guárdalo como `public/cv-jose-daniel-garcia-leon.pdf` y en `profile.ts` pon
   `` cv: `${import.meta.env.BASE_URL}cv-jose-daniel-garcia-leon.pdf` ``. Aparece el botón «Descargar CV» en Contacto
   y en «Sobre mí», y en la paleta ⌘K.
 - [ ] **Cita del dueño de Se7en** (con su permiso). Añádela a `src/data/testimonials.ts`:

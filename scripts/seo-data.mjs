@@ -2,8 +2,10 @@
 // Se escribe en .mjs plano (sin TypeScript) para poder ejecutarlo con Node a secas.
 
 const github = 'https://github.com/JoseDaniel369-dev'
-// Añade aquí tu LinkedIn cuando lo tengas: mejora el panel de conocimiento de Google.
-const sameAs = [github]
+// Misma URL que profile.linkedin (aquí no se puede importar porque profile.ts usa import.meta.env).
+// Los perfiles de `sameAs` ayudan a Google a identificar a la persona en su panel de conocimiento.
+const linkedin = 'https://www.linkedin.com/in/jos%C3%A9-daniel-garc%C3%ADa-le%C3%B3n-05897b40a/'
+const sameAs = [github, linkedin]
 
 // Misma URL que profile.se7en.siteUrl (aquí no se puede importar porque profile.ts usa import.meta.env).
 // Al lanzar la web de Se7en con su dominio definitivo, cámbiala en los dos sitios.
