@@ -11,7 +11,7 @@ export function Faq() {
   return (
     <section className="section" id="faq" aria-labelledby="faq-title">
       <div className="wrap faq">
-        <SectionHead n={7} eyebrow={f.eyebrow} title={f.title} id="faq-title" />
+        <SectionHead n={8} eyebrow={f.eyebrow} title={f.title} id="faq-title" />
         <div className="faq__list">
           {f.items.map((it) => (
             <details key={it.q} className="faq__item card">

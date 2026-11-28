@@ -46,7 +46,7 @@ export function HomeScreenStack() {
   return (
     <section className="section" id="stack" aria-labelledby="stack-title">
       <div className="wrap">
-        <SectionHead n={6} eyebrow={s.eyebrow} title={s.title} lead={s.lead} id="stack-title" />
+        <SectionHead n={7} eyebrow={s.eyebrow} title={s.title} lead={s.lead} id="stack-title" />
 
         <div className="home">
           <div className="home__screen" role="group" aria-label={s.homeLabel}>

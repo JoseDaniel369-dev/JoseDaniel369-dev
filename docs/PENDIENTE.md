@@ -42,6 +42,9 @@ Quedan en `src/i18n/es.ts` y `en.ts`. Si alguno no es verdad para ti, cámbialo 
 - [ ] **Plazos:** «una landing o una web corporativa suele ser cuestión de semanas» (`faq`).
 - [ ] **Entregables de cada servicio** (`services.items[].includes`): revisa que cada punto lo ofreces de verdad,
   sobre todo en «Automatización e integraciones con IA», que es el servicio con menos pruebas.
+- [ ] **Sección «¿Por qué una web?»** (`why` en `es.ts`/`en.ts`, componente `WhyWeb`): los textos los redacté yo. Lee los
+  seis motivos y las cuatro dudas típicas y confirma que te representan. No lleva cifras ni estadísticas; si quieres
+  añadir alguna, que sea con su fuente. Sirve de ejemplo real el caso de Se7en.
 - [x] **Rangos de presupuesto del formulario:** eliminados (el formulario ya no pide presupuesto).
 - [ ] **«Málaga · en remoto para toda España»** (`hero.place`, `footer.place`, JSON-LD en `scripts/seo-data.mjs`).
 - [ ] **Sobre mí** (`about.bio`) y las cinco tarjetas (`about.items`): no incluyen años de experiencia ni títulos.

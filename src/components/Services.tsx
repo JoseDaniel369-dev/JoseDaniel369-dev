@@ -19,7 +19,7 @@ export function Services() {
   return (
     <section className="section" id="servicios" aria-labelledby="services-title">
       <div className="wrap">
-        <SectionHead n={1} eyebrow={s.eyebrow} title={s.title} lead={s.lead} id="services-title" />
+        <SectionHead n={2} eyebrow={s.eyebrow} title={s.title} lead={s.lead} id="services-title" />
 
         <ul className="services">
           {s.items.map((it, i) => {

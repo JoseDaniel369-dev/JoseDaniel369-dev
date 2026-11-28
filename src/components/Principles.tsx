@@ -14,7 +14,7 @@ export function Principles() {
     <section className="section" id="sobre-mi" aria-labelledby="about-title">
       <div className="wrap approach">
         <div className="approach__head">
-          <SectionHead n={5} eyebrow={a.eyebrow} title={a.title} lead={a.lead} id="about-title" />
+          <SectionHead n={6} eyebrow={a.eyebrow} title={a.title} lead={a.lead} id="about-title" />
           <div className="about">
             <Avatar alt={t.hero.photoAlt} size={88} />
             <p>{a.bio}</p>

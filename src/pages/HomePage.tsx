@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { Hero } from '../components/Hero'
+import { WhyWeb } from '../components/WhyWeb'
 import { Services } from '../components/Services'
 import { Clients } from '../components/Clients'
 import { Projects } from '../components/Projects'
@@ -19,6 +20,9 @@ export function HomePage() {
   return (
     <>
       <Hero />
+      <Suspense>
+        <WhyWeb />
+      </Suspense>
       <Suspense>
         <Services />
       </Suspense>

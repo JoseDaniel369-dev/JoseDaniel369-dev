@@ -51,6 +51,7 @@ export const es = {
     offlineBanner: 'Sin conexión. Esta web sigue funcionando entera.',
   },
   nav: {
+    why: 'Por qué una web',
     services: 'Servicios',
     projects: 'Proyectos',
     process: 'Proceso',
@@ -86,6 +87,76 @@ export const es = {
     captionMock: 'Maqueta ilustrativa de mi app',
   },
   marquee: { label: 'Tecnologías con las que trabajo' },
+  why: {
+    eyebrow: 'Por qué una web',
+    title: 'Tus clientes ya te están buscando. ¿Qué encuentran?',
+    lead: 'Antes de llamarte, escribirte o pasar por tu local, casi todo el mundo busca primero en el móvil. Tu web es la que contesta por ti cuando tú no estás delante.',
+    practiceLabel: 'En la práctica',
+    items: [
+      {
+        id: 'found',
+        t: 'Te encuentran cuando te buscan',
+        d: 'Cuando alguien busca lo que haces y tu ciudad, aparece quien tiene una web clara y bien hecha. Si tú no estás, ese cliente se va con el siguiente resultado.',
+        example: 'Alguien recién mudado busca «gimnasio en Antequera» y encuentra Se7en.',
+      },
+      {
+        id: 'always',
+        t: 'Abierta las 24 horas, también en domingo',
+        d: 'Horarios, servicios, ubicación y formas de contacto siempre a mano, aunque tengas el teléfono apagado o estés con un cliente.',
+        example: 'Menos llamadas y mensajes para preguntar lo mismo de siempre.',
+      },
+      {
+        id: 'trust',
+        t: 'Da confianza antes del primer contacto',
+        d: 'Cuando alguien te recomienda, lo siguiente que hace la otra persona es buscarte. Una web cuidada dice «este negocio va en serio». No encontrar nada, o algo anticuado, siembra la duda.',
+        example: 'El boca a boca llega a tu web y no se queda por el camino.',
+      },
+      {
+        id: 'own',
+        t: 'Es tuya, no de una red social',
+        d: 'Las redes cambian sus reglas, bajan tu alcance o pueden cerrarte la cuenta sin avisar. Tu web y tu dirección son tuyas, y nadie te las quita.',
+        example: 'Las redes atraen a la gente. La web es donde se decide.',
+      },
+      {
+        id: 'convert',
+        t: 'Convierte visitas en clientes',
+        d: 'Un botón para llamar, escribir por WhatsApp, reservar o pedir presupuesto, a un toque desde el móvil. Quien llega sabe qué hacer a continuación.',
+        example: 'En la web de Se7en, reservar la primera clase gratis es un solo toque.',
+      },
+      {
+        id: 'measure',
+        t: 'Sabes qué funciona',
+        d: 'Con una analítica sencilla y sin cookies ves cuánta gente entra, desde dónde y qué busca. Decides con datos, no a ojo.',
+        example: 'Sabes si te llegan más clientes por Google, por Instagram o por recomendación.',
+      },
+    ],
+    seeCase: 'Ver el caso',
+    objectionsTitle: 'Lo que suelen decirme',
+    objections: [
+      {
+        q: '«Ya tengo Instagram.»',
+        a: 'Perfecto, sigue con él. Instagram atrae; la web convence y convierte. Pon el enlace en tu biografía y trabajan juntas.',
+      },
+      {
+        q: '«Mi negocio es de toda la vida, ya me conocen.»',
+        a: 'Los de siempre, sí. Pero los vecinos nuevos, los turistas y la gente joven te buscan en el móvil antes de entrar.',
+      },
+      {
+        q: '«Una web es cara.»',
+        a: 'No hace falta una web enorme. Una página clara con lo esencial ya trabaja por ti. Te digo con sinceridad qué necesitas y qué te puedes ahorrar.',
+      },
+      {
+        q: '«No tengo tiempo de mantenerla.»',
+        a: 'No tienes que hacerlo tú. Puedo encargarme de los cambios y las actualizaciones para que tu web siempre esté al día.',
+      },
+    ],
+    cta: {
+      title: '¿Tu negocio aún no tiene web, o la que tiene no te trae clientes?',
+      text: 'Cuéntame a qué te dedicas y te digo, sin compromiso, qué haría yo en tu lugar.',
+      primary: 'Quiero mi web',
+      secondary: 'Ver un ejemplo real',
+    },
+  },
   services: {
     eyebrow: 'Servicios',
     title: 'Qué puedo hacer por tu negocio',

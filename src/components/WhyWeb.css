@@ -1,0 +1,152 @@
+.why {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(2rem, 5vw, 3rem);
+}
+
+@media (min-width: 640px) {
+  .why {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) {
+  .why {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.why li {
+  display: flex;
+}
+
+.why__item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: clamp(1.3rem, 2.5vw, 1.7rem);
+}
+
+.why__item h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.why__item > p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.why__item .why__example {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.why__example b {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--accent-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.why__example a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--accent-text);
+  font-weight: 700;
+}
+
+/* Dudas habituales + cierre con llamada a la acción */
+.why__more {
+  display: grid;
+  align-items: start;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 900px) {
+  .why__more {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+}
+
+.why__objections {
+  padding: clamp(1.3rem, 2.5vw, 1.9rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+}
+
+.why__objections h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.why__objections dl {
+  display: grid;
+  gap: 1.1rem;
+  margin: 1.1rem 0 0;
+}
+
+.why__objections dt {
+  font-weight: 700;
+}
+
+.why__objections dd {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* El cierre va en negativo, como la valoración inicial de Servicios, para que sea lo que más destaque. */
+.why__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: clamp(1.3rem, 2.5vw, 1.9rem);
+  border-radius: var(--r-card);
+  background: var(--ink);
+  color: var(--cloud);
+}
+
+.why__cta h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.why__cta p {
+  max-width: 36rem;
+  opacity: 0.88;
+}
+
+.why__btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.3rem;
+}
+
+.why__cta .why__primary {
+  background: var(--cloud);
+  color: var(--ink);
+}
+
+.why__cta .why__secondary {
+  border: 1.5px solid color-mix(in srgb, var(--cloud) 45%, transparent);
+  background: transparent;
+  color: var(--cloud);
+}

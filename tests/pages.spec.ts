@@ -190,6 +190,32 @@ test.describe('Conversión: de cada servicio al formulario', () => {
     await expect(page.getByRole('radio', { name: 'Software a medida' })).toBeChecked()
   })
 
+  test('«¿Por qué una web?»: seis motivos, dudas típicas y CTAs que funcionan', async ({ page }) => {
+    await page.goto('/')
+    await ready(page)
+    const why = page.locator('#por-que-una-web')
+    await expect(why.getByRole('heading', { level: 2 })).toContainText('Tus clientes ya te están buscando')
+    await expect(why.locator('.why__item')).toHaveCount(6)
+    await expect(why.locator('.why__objections dt')).toHaveCount(4)
+    // «Quiero mi web» deja el formulario preparado con «Web corporativa».
+    await why.getByRole('link', { name: /Quiero mi web/ }).click()
+    await expect(page).toHaveURL(/#contacto$/)
+    await expect(page.getByRole('radio', { name: 'Web corporativa' })).toBeChecked()
+  })
+
+  test('«¿Por qué una web?» enlaza al caso real de Se7en', async ({ page }) => {
+    await page.goto('/')
+    await ready(page)
+    await page.locator('#por-que-una-web').getByRole('link', { name: 'Ver un ejemplo real' }).click()
+    await expect(page).toHaveURL(/\/proyectos\/se7en\/$/)
+  })
+
+  test('«¿Por qué una web?» existe también en inglés', async ({ request }) => {
+    const html = await (await request.get('/en/')).text()
+    expect(html).toContain('id="por-que-una-web"')
+    expect(html).toContain('Your customers are already looking for you')
+  })
+
   test('el parámetro ?tipo= se ignora si no es un tipo válido', async ({ page }) => {
     await page.goto('/?tipo=<script>&intencion=nada#contacto')
     await ready(page)

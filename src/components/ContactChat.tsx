@@ -203,7 +203,7 @@ export function ContactChat() {
     <section className="section" id="contacto" aria-labelledby="contact-title">
       <div className="wrap contact">
         <div className="contact__intro">
-          <SectionHead n={8} eyebrow={c.eyebrow} title={c.title} lead={offline ? c.offlineHint : c.lead} id="contact-title" />
+          <SectionHead n={9} eyebrow={c.eyebrow} title={c.title} lead={offline ? c.offlineHint : c.lead} id="contact-title" />
 
           <div className="contact__actions">
             <a className="btn btn--primary btn--lg" href={whatsappHref(c.whatsappText)} target="_blank" rel="noreferrer">

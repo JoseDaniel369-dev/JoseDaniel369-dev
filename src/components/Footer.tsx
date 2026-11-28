@@ -12,6 +12,7 @@ export function Footer() {
   const f = t.footer
 
   const explore = [
+    { href: sec('por-que-una-web'), label: t.nav.why },
     { href: sec('servicios'), label: t.nav.services },
     { href: sec('proyectos'), label: t.nav.projects },
     { href: sec('proceso'), label: t.nav.process },

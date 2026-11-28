@@ -60,7 +60,7 @@ export function Projects() {
   return (
     <section className="section" id="proyectos" aria-labelledby="projects-title">
       <div className="wrap">
-        <SectionHead n={3} eyebrow={p.eyebrow} title={p.title} lead={p.lead} id="projects-title" />
+        <SectionHead n={4} eyebrow={p.eyebrow} title={p.title} lead={p.lead} id="projects-title" />
 
         <ul className="projects">
           {projects.map((pr, i) => {

@@ -178,6 +178,7 @@ h4 {
 
 /* Alto estimado de cada sección mientras no se pinta (medido en móvil, tableta y escritorio). Si fuera mucho menor
    que el real, la página saltaría al llegar a ellas y la posición de lo de debajo sería errónea. */
+#por-que-una-web { contain-intrinsic-block-size: auto 3670px; }
 #servicios { contain-intrinsic-block-size: auto 3700px; }
 #clientes { contain-intrinsic-block-size: auto 1170px; }
 #proyectos { contain-intrinsic-block-size: auto 3370px; }
@@ -188,6 +189,7 @@ h4 {
 #contacto { contain-intrinsic-block-size: auto 1700px; }
 
 @media (min-width: 600px) {
+  #por-que-una-web { contain-intrinsic-block-size: auto 2380px; }
   #servicios { contain-intrinsic-block-size: auto 2950px; }
   #clientes { contain-intrinsic-block-size: auto 1000px; }
   #proyectos { contain-intrinsic-block-size: auto 2950px; }
@@ -199,6 +201,7 @@ h4 {
 }
 
 @media (min-width: 1000px) {
+  #por-que-una-web { contain-intrinsic-block-size: auto 1900px; }
   #servicios { contain-intrinsic-block-size: auto 1800px; }
   #clientes { contain-intrinsic-block-size: auto 750px; }
   #proyectos { contain-intrinsic-block-size: auto 2050px; }

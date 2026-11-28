@@ -52,6 +52,7 @@ export const en: Dict = {
     offlineBanner: 'You are offline. This site keeps working.',
   },
   nav: {
+    why: 'Why a website',
     services: 'Services',
     projects: 'Projects',
     process: 'Process',
@@ -87,6 +88,76 @@ export const en: Dict = {
     captionMock: 'Illustrative mockup of my app',
   },
   marquee: { label: 'Technologies I work with' },
+  why: {
+    eyebrow: 'Why a website',
+    title: 'Your customers are already looking for you. What do they find?',
+    lead: 'Before they call you, message you or walk into your shop, almost everyone looks you up on their phone first. Your website answers for you when you are not there.',
+    practiceLabel: 'In practice',
+    items: [
+      {
+        id: 'found',
+        t: 'They find you when they search',
+        d: 'When someone searches for what you do and your town, the business with a clear, well-made website shows up. If you are not there, that customer goes to the next result.',
+        example: 'Someone who just moved searches “gym in Antequera” and finds Se7en.',
+      },
+      {
+        id: 'always',
+        t: 'Open 24 hours, Sundays too',
+        d: 'Opening hours, services, location and ways to reach you are always at hand, even when your phone is off or you are with a customer.',
+        example: 'Fewer calls and messages asking the same thing over and over.',
+      },
+      {
+        id: 'trust',
+        t: 'It builds trust before the first contact',
+        d: 'When someone recommends you, the next thing the other person does is look you up. A well-kept website says “this business is serious”. Finding nothing, or something outdated, plants doubt.',
+        example: 'Word of mouth reaches your website and does not get lost on the way.',
+      },
+      {
+        id: 'own',
+        t: 'It is yours, not a social network’s',
+        d: 'Social networks change their rules, cut your reach or can close your account without warning. Your website and your address are yours, and nobody can take them away.',
+        example: 'Social networks attract people. The website is where they decide.',
+      },
+      {
+        id: 'convert',
+        t: 'It turns visitors into customers',
+        d: 'A button to call, message you on WhatsApp, book or ask for a quote, one tap away on a phone. Whoever arrives knows what to do next.',
+        example: 'On the Se7en website, booking the free first class takes a single tap.',
+      },
+      {
+        id: 'measure',
+        t: 'You know what works',
+        d: 'With simple, cookie-free analytics you see how many people visit, where from and what they look for. You decide with data, not by guesswork.',
+        example: 'You know whether more customers come from Google, Instagram or word of mouth.',
+      },
+    ],
+    seeCase: 'See the case',
+    objectionsTitle: 'What people often tell me',
+    objections: [
+      {
+        q: '“I already have Instagram.”',
+        a: 'Great, keep it. Instagram attracts; the website convinces and converts. Put the link in your bio and they work together.',
+      },
+      {
+        q: '“My business has been here forever, people know me.”',
+        a: 'The regulars do. But new neighbours, tourists and young people look you up on their phone before they walk in.',
+      },
+      {
+        q: '“A website is expensive.”',
+        a: 'You do not need a huge website. A clear page with the essentials already works for you. I will tell you honestly what you need and what you can skip.',
+      },
+      {
+        q: '“I do not have time to maintain it.”',
+        a: 'You do not have to. I can take care of the changes and updates so your website is always up to date.',
+      },
+    ],
+    cta: {
+      title: 'Does your business still have no website, or does the one it has bring no customers?',
+      text: 'Tell me what you do and I will tell you, with no commitment, what I would do in your place.',
+      primary: 'I want my website',
+      secondary: 'See a real example',
+    },
+  },
   services: {
     eyebrow: 'Services',
     title: 'What I can do for your business',

@@ -14,7 +14,7 @@ export function Clients() {
   return (
     <section className="section" id="clientes" aria-labelledby="clients-title">
       <div className="wrap">
-        <SectionHead n={2} eyebrow={c.eyebrow} title={c.title} id="clients-title" />
+        <SectionHead n={3} eyebrow={c.eyebrow} title={c.title} id="clients-title" />
 
         <ul className="clients">
           {c.items.map((it, i) => {

@@ -10,7 +10,7 @@ export function Process() {
   return (
     <section className="section" id="proceso" aria-labelledby="process-title">
       <div className="wrap">
-        <SectionHead n={4} eyebrow={p.eyebrow} title={p.title} lead={p.lead} id="process-title" />
+        <SectionHead n={5} eyebrow={p.eyebrow} title={p.title} lead={p.lead} id="process-title" />
 
         <ol className="steps">
           {p.steps.map((st, i) => (

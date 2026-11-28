@@ -119,6 +119,7 @@ export function CommandPalette() {
     })
 
     const list: Item[] = [
+      nav('por-que-una-web', t.nav.why, 'por que una web necesito pagina negocio why website need business motivos reasons'),
       nav('servicios', t.nav.services, 'servicios services web software apps automatizacion automation ia ai'),
       nav('proyectos', t.nav.projects, 'proyectos projects trabajos portfolio'),
       pageItem('se7en', p.goSe7en, 'se7en gimnasio gym web caso estudio case study cliente client'),
