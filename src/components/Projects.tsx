@@ -29,7 +29,7 @@ function Visual({ project }: { project: Project }) {
         </BrowserFrame>
         <ul className="project__scores" aria-label={`${t.se7en.lighthouseTitle}: ${t.se7en.lighthouseNote}`}>
           {[
-            [94, t.se7en.perf],
+            [96, t.se7en.perf],
             [100, t.se7en.a11y],
             [100, t.se7en.bp],
           ].map(([v, label]) => (

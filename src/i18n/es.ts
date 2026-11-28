@@ -12,7 +12,7 @@ export const es = {
     se7en: {
       title: 'Caso de estudio: la web de Se7en Antequera | Jose Daniel García León',
       description:
-        'Cómo diseñé y desarrollé la web de un centro de artes marciales: Astro, Lighthouse 94, 100 y 100, SEO técnico y reserva de la primera clase en un toque.',
+        'Cómo diseñé y desarrollé la web de un centro de artes marciales: Astro, Lighthouse 96, 100 y 100, SEO técnico y reserva de la primera clase en un toque.',
       ogTitle: 'Caso de estudio: la web de Se7en Antequera',
       ogDescription: 'Una web de negocio rápida, optimizada para Google y pensada para el móvil. Retos, decisiones y resultados.',
     },
@@ -72,7 +72,7 @@ export const es = {
     proofLabel: 'Pruebas',
     proof: [
       { label: 'Web real: Se7en Antequera', page: 'se7en' as const },
-      { label: 'Lighthouse móvil 94 · 100 · 100', page: 'se7en' as const },
+      { label: 'Lighthouse móvil 96 · 100 · 100', page: 'se7en' as const },
       { label: 'JfooD: app de código abierto', page: 'jfood' as const },
     ],
     online: 'En línea',
@@ -374,7 +374,7 @@ export const es = {
     decisions: [
       {
         t: 'Astro: casi sin JavaScript',
-        d: 'La web se genera como HTML estático y solo carga el JavaScript imprescindible. Es lo que sostiene el 94 de rendimiento en móvil.',
+        d: 'La web se genera como HTML estático y solo carga el JavaScript imprescindible. Es lo que sostiene el 96 de rendimiento en móvil.',
       },
       {
         t: 'Nada inventado',

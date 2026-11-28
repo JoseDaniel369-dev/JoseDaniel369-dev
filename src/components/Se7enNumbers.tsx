@@ -36,8 +36,8 @@ function ScoreRing({ value, label }: { value: number; label: string }) {
 }
 
 /**
- * Bento con las cifras reales de la web de Se7en. Todas salen de su README:
- * Lighthouse móvil de 94 a 95 en rendimiento (se muestra el mínimo), 100 y 100,
+ * Bento con las cifras reales de la web de Se7en. Las cifras salen de su README, salvo Lighthouse, medido sobre la web publicada:
+ * Lighthouse móvil de 96 en rendimiento (mediana de 3 mediciones propias en noviembre de 2026), 100 y 100,
  * 16 páginas, 140 pruebas e2e y ninguna cookie de seguimiento.
  */
 export function Se7enNumbers() {
@@ -49,7 +49,7 @@ export function Se7enNumbers() {
       <article className="tile tile--free card spot">
         <h3>{s.lighthouseTitle}</h3>
         <ul className="scores">
-          <ScoreRing value={94} label={s.perf} />
+          <ScoreRing value={96} label={s.perf} />
           <ScoreRing value={100} label={s.a11y} />
           <ScoreRing value={100} label={s.bp} />
         </ul>

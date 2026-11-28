@@ -101,7 +101,7 @@ Lanzada en `https://se7enresilienceteam.com/`. Hecho: `siteUrl` y `launched: tru
 en `scripts/seo-data.mjs`, `index.html`, capturas y imagen para compartir regeneradas, textos de «versión previa»
 actualizados.
 
-- [ ] Mide Lighthouse móvil en la portada publicada y repasa las cifras del caso de estudio (94 / 100 / 100 de Lighthouse, 16 páginas, 140 pruebas, 0 cookies)
+- [ ] Repasa las cifras del caso de estudio (96 / 100 / 100 de Lighthouse, 16 páginas, 140 pruebas, 0 cookies)
   contra el README actual del repo de Se7en y actualízalas si han cambiado
   (`src/components/Se7enNumbers.tsx`, `src/components/Projects.tsx`, `hero.proof` y `projects` en `es.ts`/`en.ts`).
 - [ ] El repo de Se7en es **privado**: solo se enlaza la web, nunca el código.

@@ -13,7 +13,7 @@ export const en: Dict = {
     se7en: {
       title: 'Case study: the Se7en Antequera website | Jose Daniel García León',
       description:
-        'How I designed and built the website of a martial arts center: Astro, Lighthouse 94, 100 and 100, technical SEO and booking the first class in one tap.',
+        'How I designed and built the website of a martial arts center: Astro, Lighthouse 96, 100 and 100, technical SEO and booking the first class in one tap.',
       ogTitle: 'Case study: the Se7en Antequera website',
       ogDescription: 'A fast business website, optimized for Google and built mobile-first. Challenges, decisions and results.',
     },
@@ -73,7 +73,7 @@ export const en: Dict = {
     proofLabel: 'Proof',
     proof: [
       { label: 'Real site: Se7en Antequera', page: 'se7en' as const },
-      { label: 'Mobile Lighthouse 94 · 100 · 100', page: 'se7en' as const },
+      { label: 'Mobile Lighthouse 96 · 100 · 100', page: 'se7en' as const },
       { label: 'JfooD: open-source app', page: 'jfood' as const },
     ],
     online: 'Online',
@@ -375,7 +375,7 @@ export const en: Dict = {
     decisions: [
       {
         t: 'Astro: almost no JavaScript',
-        d: 'The site is generated as static HTML and only ships the JavaScript it needs. That is what holds the 94 mobile performance score.',
+        d: 'The site is generated as static HTML and only ships the JavaScript it needs. That is what holds the 96 mobile performance score.',
       },
       {
         t: 'Nothing made up',
