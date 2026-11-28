@@ -9,7 +9,7 @@ const sameAs = [github, linkedin]
 
 // Misma URL que profile.se7en.siteUrl (aquí no se puede importar porque profile.ts usa import.meta.env).
 // Al lanzar la web de Se7en con su dominio definitivo, cámbiala en los dos sitios.
-const se7enUrl = 'https://se7enmartialartsgymweb.josedanielgarcialeon4.workers.dev/'
+const se7enUrl = 'https://se7enresilienceteam.com/'
 
 const spain = { '@type': 'Country', name: 'España' }
 const address = { '@type': 'PostalAddress', addressLocality: 'Málaga', addressRegion: 'Andalucía', addressCountry: 'ES' }

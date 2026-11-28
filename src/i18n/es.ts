@@ -305,7 +305,7 @@ export const es = {
     want: 'Quiero una web así',
     privateNote: 'El código es privado: es el de un cliente.',
     galleryTitle: 'Así se ve',
-    galleryNote: 'Capturas reales de la versión previa, con el permiso del gimnasio. El contenido puede cambiar hasta el lanzamiento.',
+    galleryNote: 'Capturas reales de la web publicada, con el permiso del gimnasio.',
     shots: {
       homeDesktop: 'Portada de la web de Se7en en un ordenador: titular, próxima clase en directo y botón para reservar la clase gratis',
       homeMobile: 'Portada de la web de Se7en en un móvil, con la próxima clase y los botones de reserva',
@@ -317,7 +317,7 @@ export const es = {
     roleValue: 'Diseño, desarrollo, SEO y puesta en marcha',
     numbersLabel: 'Se7en en cifras',
     lighthouseTitle: 'Lighthouse en móvil',
-    lighthouseNote: 'Medido en laboratorio sobre la versión previa, en la portada.',
+    lighthouseNote: 'Medido en laboratorio sobre la web publicada, en la portada.',
     perf: 'Rendimiento',
     a11y: 'Accesibilidad',
     bp: 'Buenas prácticas',
@@ -386,7 +386,7 @@ export const es = {
       },
       {
         t: 'Oculta a Google hasta el lanzamiento',
-        d: 'Mientras sea un prototipo lleva noindex, para que no aparezca con datos provisionales. Al lanzar, se activa con una variable de entorno.',
+        d: 'Mientras fue un prototipo llevó noindex, para que no apareciera con datos provisionales. Al lanzar, se activó con una variable de entorno.',
       },
     ],
     testimonialLabel: 'Opinión del cliente',
@@ -644,14 +644,6 @@ export const es = {
     nameLabel: 'Tu nombre',
     emailLabel: 'Tu email',
     companyLabel: 'Empresa (opcional)',
-    budgetLabel: 'Presupuesto (opcional)',
-    budgets: {
-      lt1k: 'Menos de 1.000 €',
-      b1to3k: 'De 1.000 a 3.000 €',
-      b3to8k: 'De 3.000 a 8.000 €',
-      gt8k: 'Más de 8.000 €',
-      unknown: 'Aún no lo sé',
-    },
     messageLabel: 'Tu mensaje',
     messagePlaceholder: 'Cuéntame en qué consiste tu proyecto, para quién es y para cuándo lo necesitas.',
     send: 'Enviar',
@@ -711,7 +703,7 @@ export const es = {
       {
         h: 'Qué datos trato y para qué',
         p: [
-          'Si usas el formulario de contacto, trato tu nombre, tu email, tu empresa (si la indicas), el tipo de proyecto, el presupuesto orientativo (si lo indicas) y el mensaje.',
+          'Si usas el formulario de contacto, trato tu nombre, tu email, tu empresa (si la indicas), el tipo de proyecto y el mensaje.',
           'Los uso solo para responder a tu consulta y, si procede, preparar una propuesta. La base legal es tu consentimiento al enviar el formulario y la aplicación de medidas precontractuales a petición tuya.',
         ],
       },

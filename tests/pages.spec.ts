@@ -153,6 +153,13 @@ test.describe('Imágenes', () => {
       await expect(img).toHaveAttribute('alt', /.{40,}/)
     }
   })
+
+  test('Se7en está lanzada: enlaza a su dominio y ya no es «versión previa»', async ({ page }) => {
+    await page.goto('/proyectos/se7en/')
+    await ready(page)
+    await expect(page.getByRole('link', { name: /Ver la web/ }).first()).toHaveAttribute('href', 'https://se7enresilienceteam.com/')
+    await expect(page.getByText(/versión previa/i)).toHaveCount(0)
+  })
 })
 
 test.describe('Conversión: de cada servicio al formulario', () => {

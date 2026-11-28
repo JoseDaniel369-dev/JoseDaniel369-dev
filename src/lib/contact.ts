@@ -10,7 +10,6 @@ export interface Outgoing {
   intent: string
   /** Tipo de proyecto. */
   type: string
-  budget: string
   text: string
 }
 
@@ -45,7 +44,6 @@ export async function sendMessage(msg: Outgoing, subject: string): Promise<void>
   body.append('company', msg.company)
   body.append('intent', msg.intent)
   body.append('project_type', msg.type)
-  body.append('budget', msg.budget)
   body.append('message', msg.text)
   const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body })
   const data = (await res.json().catch(() => ({}))) as { success?: boolean; message?: string }
@@ -72,7 +70,6 @@ export function loadQueue(): Outgoing[] {
       company: q.company ?? '',
       intent: q.intent ?? '',
       type: q.type ?? '',
-      budget: q.budget ?? '',
       text: q.text ?? '',
     }))
   } catch {

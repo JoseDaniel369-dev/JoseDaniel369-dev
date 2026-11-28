@@ -42,8 +42,7 @@ Quedan en `src/i18n/es.ts` y `en.ts`. Si alguno no es verdad para ti, cámbialo 
 - [ ] **Plazos:** «una landing o una web corporativa suele ser cuestión de semanas» (`faq`).
 - [ ] **Entregables de cada servicio** (`services.items[].includes`): revisa que cada punto lo ofreces de verdad,
   sobre todo en «Automatización e integraciones con IA», que es el servicio con menos pruebas.
-- [ ] **Rangos de presupuesto del formulario** (`contact.budgets`): menos de 1.000 €, 1.000–3.000, 3.000–8.000 y más de
-  8.000. Ajústalos a tus precios reales (también `budgetKeys` en `src/lib/brief.ts` si cambias cuántos son).
+- [x] **Rangos de presupuesto del formulario:** eliminados (el formulario ya no pide presupuesto).
 - [ ] **«Málaga · en remoto para toda España»** (`hero.place`, `footer.place`, JSON-LD en `scripts/seo-data.mjs`).
 - [ ] **Sobre mí** (`about.bio`) y las cinco tarjetas (`about.items`): no incluyen años de experiencia ni títulos.
 - [ ] **FAQ** (6 preguntas) y los textos del caso de Se7en (`se7en.challenge`, `se7en.decisions`, sacados del README de
@@ -96,16 +95,13 @@ La web funciona sin esto: cada bloque simplemente no aparece hasta que exista.
     **Variables**) y en `.env.local` para builds en el PC (no se sube).
 - [ ] **Leer la web en el móvil** y en inglés, de arriba abajo, como lo haría un cliente.
 
-## 6. Cuando Se7en lance con dominio propio
+## 6. Se7en ya tiene dominio propio
 
-Hoy es un prototipo con `noindex` en `https://se7enmartialartsgymweb.josedanielgarcialeon4.workers.dev/`.
+Lanzada en `https://se7enresilienceteam.com/`. Hecho: `siteUrl` y `launched: true` en `src/data/profile.ts`, `se7enUrl`
+en `scripts/seo-data.mjs`, `index.html`, capturas y imagen para compartir regeneradas, textos de «versión previa»
+actualizados.
 
-- [ ] `src/data/profile.ts`: cambia `se7en.siteUrl` por el dominio definitivo y pon `launched: true` (desaparece la
-  etiqueta «Versión previa»).
-- [ ] `scripts/seo-data.mjs`: cambia `se7enUrl` por la misma URL.
-- [ ] Vuelve a hacer las capturas con `node scripts/capture-se7en.mjs` (cambia `SE7EN_URL` si hace falta) y la imagen
-  para compartir con `node scripts/og-image.mjs`.
-- [ ] Repasa las cifras del caso de estudio (94 / 100 / 100 de Lighthouse, 16 páginas, 140 pruebas, 0 cookies)
+- [ ] Mide Lighthouse móvil en la portada publicada y repasa las cifras del caso de estudio (94 / 100 / 100 de Lighthouse, 16 páginas, 140 pruebas, 0 cookies)
   contra el README actual del repo de Se7en y actualízalas si han cambiado
   (`src/components/Se7enNumbers.tsx`, `src/components/Projects.tsx`, `hero.proof` y `projects` en `es.ts`/`en.ts`).
 - [ ] El repo de Se7en es **privado**: solo se enlaza la web, nunca el código.

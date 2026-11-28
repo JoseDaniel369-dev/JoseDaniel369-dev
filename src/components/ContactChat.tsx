@@ -5,13 +5,11 @@ import { useI18n } from '../i18n/I18nContext'
 import { useNetwork } from '../context/NetworkContext'
 import { profile } from '../data/profile'
 import {
-  budgetKeys,
   intents,
   PRESET_BRIEF,
   presetFromSearch,
   projectTypes,
   type BriefPreset,
-  type BudgetKey,
   type Intent,
   type ProjectType,
 } from '../lib/brief'
@@ -29,7 +27,7 @@ interface Msg extends Outgoing {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
-/** Contacto: canales directos y un brief (tipo de proyecto, presupuesto, mensaje) con forma de conversación. */
+/** Contacto: canales directos y un brief (tipo de proyecto, mensaje) con forma de conversación. */
 export function ContactChat() {
   const { t, href } = useI18n()
   const { offline } = useNetwork()
@@ -37,7 +35,6 @@ export function ContactChat() {
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [intent, setIntent] = useState<Intent>('quote')
   const [type, setType] = useState<ProjectType | ''>('')
-  const [budget, setBudget] = useState<BudgetKey | ''>('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
@@ -92,7 +89,7 @@ export function ContactChat() {
           .map((msg) =>
             [
               [msg.intent, msg.type].filter(Boolean).join(' · '),
-              [msg.company, msg.budget].filter(Boolean).join(' · '),
+              msg.company,
               '',
               msg.text,
               '',
@@ -174,7 +171,6 @@ export function ContactChat() {
       company: company.trim(),
       intent: c.intents[intent],
       type: type ? c.types[type] : '',
-      budget: budget ? c.budgets[budget] : '',
       text: clean,
       status: offline ? 'queued' : 'sending',
     }
@@ -368,29 +364,16 @@ export function ContactChat() {
                 />
               </label>
             </div>
-            <div className="chat__pair">
-              <label>
-                <span className="sr-only">{c.companyLabel}</span>
-                <input
-                  type="text"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  placeholder={c.companyLabel}
-                  autoComplete="organization"
-                />
-              </label>
-              <label>
-                <span className="sr-only">{c.budgetLabel}</span>
-                <select value={budget} onChange={(e) => setBudget(e.target.value as BudgetKey | '')}>
-                  <option value="">{c.budgetLabel}</option>
-                  {budgetKeys.map((k) => (
-                    <option key={k} value={k}>
-                      {c.budgets[k]}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
+            <label>
+              <span className="sr-only">{c.companyLabel}</span>
+              <input
+                type="text"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder={c.companyLabel}
+                autoComplete="organization"
+              />
+            </label>
             {/* Campo trampa para bots: oculto a la vista y al teclado. */}
             <input ref={honeypot} className="chat__hp" type="text" name="botcheck" tabIndex={-1} autoComplete="off" aria-hidden="true" />
             <div className="chat__row">

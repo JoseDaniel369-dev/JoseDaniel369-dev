@@ -306,7 +306,7 @@ export const en: Dict = {
     want: 'I want a site like this',
     privateNote: 'The code is private: it belongs to a client.',
     galleryTitle: 'What it looks like',
-    galleryNote: "Real screenshots of the preview version, shown with the gym's permission. Content may change before launch.",
+    galleryNote: "Real screenshots of the live website, shown with the gym's permission.",
     shots: {
       homeDesktop: 'Home page of the Se7en website on a computer: headline, live next class and a button to book the free class',
       homeMobile: 'Home page of the Se7en website on a phone, with the next class and the booking buttons',
@@ -318,7 +318,7 @@ export const en: Dict = {
     roleValue: 'Design, development, SEO and launch',
     numbersLabel: 'Se7en in numbers',
     lighthouseTitle: 'Lighthouse on mobile',
-    lighthouseNote: 'Lab-measured on the preview version, on the home page.',
+    lighthouseNote: 'Lab-measured on the published website, on the home page.',
     perf: 'Performance',
     a11y: 'Accessibility',
     bp: 'Best practices',
@@ -387,7 +387,7 @@ export const en: Dict = {
       },
       {
         t: 'Hidden from Google until launch',
-        d: 'While it is a prototype it carries noindex, so it does not show up with placeholder data. At launch it is switched on with an environment variable.',
+        d: 'While it was a prototype it carried noindex, so it did not show up with placeholder data. At launch it was switched on with an environment variable.',
       },
     ],
     testimonialLabel: 'Client feedback',
@@ -645,14 +645,6 @@ export const en: Dict = {
     nameLabel: 'Your name',
     emailLabel: 'Your email',
     companyLabel: 'Company (optional)',
-    budgetLabel: 'Budget (optional)',
-    budgets: {
-      lt1k: 'Under €1,000',
-      b1to3k: '€1,000 to €3,000',
-      b3to8k: '€3,000 to €8,000',
-      gt8k: 'Over €8,000',
-      unknown: 'I do not know yet',
-    },
     messageLabel: 'Your message',
     messagePlaceholder: 'Tell me what your project is about, who it is for and when you need it.',
     send: 'Send',
@@ -712,7 +704,7 @@ export const en: Dict = {
       {
         h: 'What data I handle and why',
         p: [
-          'If you use the contact form, I handle your name, your email, your company (if you give it), the type of project, the approximate budget (if you give it) and your message.',
+          'If you use the contact form, I handle your name, your email, your company (if you give it), the type of project and your message.',
           'I use them only to answer your enquiry and, where relevant, to prepare a proposal. The legal basis is your consent when you send the form and the application of pre-contractual measures at your request.',
         ],
       },

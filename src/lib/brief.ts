@@ -1,14 +1,11 @@
-// Datos del "brief" de contacto: qué tipo de proyecto, qué intención y qué presupuesto.
-// Los textos que ve el visitante viven en el diccionario (contact.types, contact.intents, contact.budgets).
+// Datos del "brief" de contacto: qué tipo de proyecto y qué intención.
+// Los textos que ve el visitante viven en el diccionario (contact.types, contact.intents).
 
 export const projectTypes = ['web', 'landing', 'app', 'software', 'automation', 'maintenance', 'collab'] as const
 export type ProjectType = (typeof projectTypes)[number]
 
 export const intents = ['quote', 'call'] as const
 export type Intent = (typeof intents)[number]
-
-export const budgetKeys = ['lt1k', 'b1to3k', 'b3to8k', 'gt8k', 'unknown'] as const
-export type BudgetKey = (typeof budgetKeys)[number]
 
 export interface BriefPreset {
   type?: ProjectType

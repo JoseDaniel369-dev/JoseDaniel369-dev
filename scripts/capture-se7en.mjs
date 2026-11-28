@@ -9,7 +9,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { chromium } from '@playwright/test'
 
-const SITE = process.env.SE7EN_URL ?? 'https://se7enmartialartsgymweb.josedanielgarcialeon4.workers.dev'
+const SITE = process.env.SE7EN_URL ?? 'https://se7enresilienceteam.com'
 const out = path.resolve(process.argv[2] ?? 'public/shots/se7en')
 fs.mkdirSync(out, { recursive: true })
 

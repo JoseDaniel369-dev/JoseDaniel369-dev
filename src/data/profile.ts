@@ -39,11 +39,10 @@ export const profile = {
   },
 
   // Web de Se7en Antequera (proyecto para un cliente; el repositorio es privado).
-  // Al lanzar la definitiva: cambia siteUrl por el dominio propio, pon launched en true
-  // y actualiza la misma URL en scripts/seo-data.mjs.
+  // Misma URL que `se7enUrl` en scripts/seo-data.mjs (aquí no se puede importar desde allí).
   se7en: {
-    siteUrl: 'https://se7enmartialartsgymweb.josedanielgarcialeon4.workers.dev/',
-    launched: false,
+    siteUrl: 'https://se7enresilienceteam.com/',
+    launched: true,
   },
 
   jfood: {

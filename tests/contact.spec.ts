@@ -76,7 +76,7 @@ test.describe('Contacto', () => {
       await page.getByPlaceholder('Tu nombre').fill('Ana Gómez')
       await page.getByPlaceholder('Tu email').fill('ana@acme.es')
       await page.getByPlaceholder('Empresa (opcional)').fill('Acme S.L.')
-      await page.getByRole('combobox', { name: 'Presupuesto (opcional)' }).selectOption({ label: 'De 1.000 a 3.000 €' })
+      await expect(page.getByRole('combobox', { name: /Presupuesto/ })).toHaveCount(0)
       await page.getByPlaceholder(/Cuéntame en qué consiste/).fill('Necesito una web nueva para mi empresa.')
       await page.getByRole('button', { name: 'Enviar' }).click()
 
@@ -89,7 +89,7 @@ test.describe('Contacto', () => {
       expect(field(body, 'company')).toBe('Acme S.L.')
       expect(field(body, 'intent')).toBe('Una primera conversación')
       expect(field(body, 'project_type')).toBe('Web corporativa')
-      expect(field(body, 'budget')).toBe('De 1.000 a 3.000 €')
+      expect(body).not.toContain('name="budget"')
       expect(field(body, 'message')).toBe('Necesito una web nueva para mi empresa.')
       expect(field(body, 'subject')).toBe('Contacto desde la web · Una primera conversación · Web corporativa')
     })

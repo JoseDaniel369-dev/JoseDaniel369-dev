@@ -136,8 +136,7 @@
 }
 
 .chat__form input:not([type='radio']),
-.chat__form textarea,
-.chat__form select {
+.chat__form textarea {
   width: 100%;
   padding: 0.7rem 0.9rem;
   border: 1.5px solid var(--line);
@@ -150,8 +149,7 @@
 }
 
 .chat__form input:not([type='radio']):focus,
-.chat__form textarea:focus,
-.chat__form select:focus {
+.chat__form textarea:focus {
   outline: none;
   border-color: var(--accent);
 }
@@ -257,17 +255,6 @@
 .contact__email {
   display: inline-block;
   margin-top: 0.9rem;
-}
-
-/* Desplegable de presupuesto: misma caja que los campos de texto. */
-.chat__form select {
-  appearance: none;
-  padding-right: 2.2rem;
-  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
-  background-position: calc(100% - 1.15rem) 55%, calc(100% - 0.8rem) 55%;
-  background-size: 0.35rem 0.35rem;
-  background-repeat: no-repeat;
-  cursor: pointer;
 }
 
 /* Brief: intención (presupuesto o llamada) como control segmentado. */
